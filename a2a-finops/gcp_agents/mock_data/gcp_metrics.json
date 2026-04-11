@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-04-07T20:00:00Z",
+  "instances": [
+    {
+      "instance_id": "vm-payroll-prod-01",
+      "project": "sap-prod-project",
+      "zone": "us-central1-a",
+      "machine_type": "n2-standard-8",
+      "metrics": {
+        "cpu_utilization": 94.5,
+        "memory_utilization": 78.2,
+        "active_users": 0,
+        "network_ingress_mbps": 12.4,
+        "disk_iops": 2840
+      },
+      "cost_per_day_usd": 8.5,
+      "status": "RUNNING",
+      "labels": {
+        "app": "sap-payroll",
+        "env": "production",
+        "cost_center": "HR-OPS"
+      }
+    },
+    {
+      "instance_id": "vm-fiori-prod-02",
+      "project": "sap-prod-project",
+      "zone": "us-central1-b",
+      "machine_type": "n2-standard-4",
+      "metrics": {
+        "cpu_utilization": 12.3,
+        "memory_utilization": 45.1,
+        "active_users": 24,
+        "network_ingress_mbps": 5.2,
+        "disk_iops": 450
+      },
+      "cost_per_day_usd": 4.25,
+      "status": "RUNNING",
+      "labels": {
+        "app": "sap-fiori",
+        "env": "production",
+        "cost_center": "IT-APPS"
+      }
+    },
+    {
+      "instance_id": "vm-dev-unused-03",
+      "project": "sap-dev-project",
+      "zone": "us-central1-c",
+      "machine_type": "n2-standard-16",
+      "metrics": {
+        "cpu_utilization": 0.5,
+        "memory_utilization": 8.2,
+        "active_users": 0,
+        "network_ingress_mbps": 0.1,
+        "disk_iops": 5
+      },
+      "cost_per_day_usd": 17.0,
+      "status": "RUNNING",
+      "labels": {
+        "app": "sap-dev-sandbox",
+        "env": "development",
+        "cost_center": "IT-DEV"
+      }
+    }
+  ],
+  "anomalies_detected": [
+    {
+      "instance_id": "vm-payroll-prod-01",
+      "type": "HIGH_CPU_ZERO_USERS",
+      "severity": "MEDIUM",
+      "description": "CPU at 94.5% with 0 active users"
+    },
+    {
+      "instance_id": "vm-dev-unused-03",
+      "type": "IDLE_EXPENSIVE_INSTANCE",
+      "severity": "HIGH",
+      "description": "Large instance with near-zero utilization"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "GCP FinOps Agent",
+  "description": "Monitors GCP infrastructure metrics and provides cost optimization recommendations",
+  "version": "1.0.0",
+  "endpoint": "http://localhost:8001/a2a",
+  "capabilities": [
+    "infra_metrics",
+    "cost_analysis",
+    "anomaly_detection",
+    "recommendations"
+  ],
+  "tools": [
+    {
+      "name": "get_instance_metrics",
+      "description": "Get CPU, memory, users for VMs"
+    },
+    {
+      "name": "detect_anomalies",
+      "description": "Find infrastructure anomalies"
+    },
+    {
+      "name": "get_high_cpu_zero_users",
+      "description": "Find VMs with high CPU but no users"
+    },
+    {
+      "name": "get_billing_summary",
+      "description": "Get cost breakdown"
+    },
+    {
+      "name": "get_optimization_plan",
+      "description": "Get savings recommendations"
+    }
+  ],
+  "requires_context_from": [
+    "sap_business_ops"
+  ]
+}

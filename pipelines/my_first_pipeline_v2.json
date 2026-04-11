@@ -1,0 +1,324 @@
+{
+  "components": {
+    "comp-evaluate-model": {
+      "executorLabel": "exec-evaluate-model",
+      "inputDefinitions": {
+        "artifacts": {
+          "model_artifact": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          },
+          "test_data": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          }
+        }
+      },
+      "outputDefinitions": {
+        "artifacts": {
+          "metrics": {
+            "artifactType": {
+              "schemaTitle": "system.Metrics",
+              "schemaVersion": "0.0.1"
+            }
+          }
+        }
+      }
+    },
+    "comp-load-data": {
+      "executorLabel": "exec-load-data",
+      "inputDefinitions": {
+        "parameters": {
+          "num_samples": {
+            "parameterType": "NUMBER_INTEGER"
+          }
+        }
+      },
+      "outputDefinitions": {
+        "artifacts": {
+          "output_data": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          }
+        }
+      }
+    },
+    "comp-process-data": {
+      "executorLabel": "exec-process-data",
+      "inputDefinitions": {
+        "artifacts": {
+          "input_data": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          }
+        },
+        "parameters": {
+          "test_size": {
+            "defaultValue": 0.2,
+            "isOptional": true,
+            "parameterType": "NUMBER_DOUBLE"
+          }
+        }
+      },
+      "outputDefinitions": {
+        "artifacts": {
+          "test_data": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          },
+          "train_data": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          }
+        }
+      }
+    },
+    "comp-train-model": {
+      "executorLabel": "exec-train-model",
+      "inputDefinitions": {
+        "artifacts": {
+          "train_data": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          }
+        }
+      },
+      "outputDefinitions": {
+        "artifacts": {
+          "model_artifact": {
+            "artifactType": {
+              "schemaTitle": "system.Artifact",
+              "schemaVersion": "0.0.1"
+            }
+          }
+        }
+      }
+    }
+  },
+  "deploymentSpec": {
+    "executors": {
+      "exec-evaluate-model": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "evaluate_model"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'pandas' 'scikit-learn' 'joblib'  &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.16.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef evaluate_model(\n    model_artifact: Input[Artifact],\n    test_data: Input[Artifact],\n    metrics: Output[Metrics]\n) -> None:\n    \"\"\"Evaluate model and log metrics.\"\"\"\n    import pandas as pd\n    from sklearn.metrics import accuracy_score, precision_score, recall_score\n    import joblib\n\n    # FIX: Load with correct extensions\n    model_path = model_artifact.path + \".pkl\"\n    test_path = test_data.path + \".csv\"\n\n    print(f\"\ud83d\udcc2 Loading model from: {model_path}\")\n    print(f\"\ud83d\udcc2 Loading test data from: {test_path}\")\n\n    model = joblib.load(model_path)\n    df = pd.read_csv(test_path)\n\n    X_test = df[[\"feature_1_normalized\", \"feature_2_normalized\"]]\n    y_test = df[\"target\"]\n\n    # Predict\n    y_pred = model.predict(X_test)\n\n    # Calculate metrics\n    accuracy = accuracy_score(y_test, y_pred)\n    precision = precision_score(y_test, y_pred, zero_division=0)\n    recall = recall_score(y_test, y_pred, zero_division=0)\n\n    # Log metrics (appears in Vertex AI UI)\n    metrics.log_metric(\"accuracy\", accuracy)\n    metrics.log_metric(\"precision\", precision)\n    metrics.log_metric(\"recall\", recall)\n\n    print(f\"\u2705 Evaluation complete:\")\n    print(f\"   Accuracy:  {accuracy:.4f}\")\n    print(f\"   Precision: {precision:.4f}\")\n    print(f\"   Recall:    {recall:.4f}\")\n\n"
+          ],
+          "image": "python:3.11-slim"
+        }
+      },
+      "exec-load-data": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "load_data"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'pandas'  &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.16.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef load_data(\n    num_samples: int,\n    output_data: Output[Artifact]\n) -> None:\n    \"\"\"Load or generate sample data.\"\"\"\n    import pandas as pd\n\n    # Generate sample data\n    data = {\n        \"id\": list(range(1, num_samples + 1)),\n        \"feature_1\": [i * 1.5 for i in range(1, num_samples + 1)],\n        \"feature_2\": [i * 2.0 for i in range(1, num_samples + 1)],\n        \"target\": [i % 2 for i in range(1, num_samples + 1)]\n    }\n\n    df = pd.DataFrame(data)\n\n    # FIX: Save with .csv extension\n    output_path = output_data.path + \".csv\"\n    df.to_csv(output_path, index=False)\n\n    # Store the actual path in metadata for next component\n    output_data.metadata[\"output_path\"] = output_path\n    output_data.metadata[\"num_rows\"] = len(df)\n    output_data.metadata[\"columns\"] = list(df.columns)\n\n    print(f\"\u2705 Loaded {len(df)} samples\")\n    print(f\"   Saved to: {output_path}\")\n\n"
+          ],
+          "image": "python:3.11-slim"
+        }
+      },
+      "exec-process-data": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "process_data"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'pandas' 'scikit-learn'  &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.16.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef process_data(\n    input_data: Input[Artifact],\n    train_data: Output[Artifact],\n    test_data: Output[Artifact],\n    test_size: float = 0.2\n) -> None:\n    \"\"\"Process and split data into train/test sets.\"\"\"\n    import pandas as pd\n    from sklearn.model_selection import train_test_split\n\n    # FIX: Read with .csv extension\n    input_path = input_data.path + \".csv\"\n    print(f\"\ud83d\udcc2 Reading from: {input_path}\")\n    df = pd.read_csv(input_path)\n\n    # Simple preprocessing\n    df[\"feature_1_normalized\"] = df[\"feature_1\"] / df[\"feature_1\"].max()\n    df[\"feature_2_normalized\"] = df[\"feature_2\"] / df[\"feature_2\"].max()\n\n    # Split data\n    train_df, test_df = train_test_split(df, test_size=test_size, random_state=42)\n\n    # FIX: Save with .csv extension\n    train_path = train_data.path + \".csv\"\n    test_path = test_data.path + \".csv\"\n\n    train_df.to_csv(train_path, index=False)\n    test_df.to_csv(test_path, index=False)\n\n    # Store paths in metadata\n    train_data.metadata[\"output_path\"] = train_path\n    train_data.metadata[\"num_rows\"] = len(train_df)\n    test_data.metadata[\"output_path\"] = test_path\n    test_data.metadata[\"num_rows\"] = len(test_df)\n\n    print(f\"\u2705 Split data: {len(train_df)} train, {len(test_df)} test\")\n\n"
+          ],
+          "image": "python:3.11-slim"
+        }
+      },
+      "exec-train-model": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "train_model"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'pandas' 'scikit-learn' 'joblib'  &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.16.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef train_model(\n    train_data: Input[Artifact],\n    model_artifact: Output[Artifact]\n) -> None:\n    \"\"\"Train a simple LogisticRegression model.\"\"\"\n    import pandas as pd\n    from sklearn.linear_model import LogisticRegression\n    import joblib\n\n    # FIX: Read with .csv extension\n    train_path = train_data.path + \".csv\"\n    print(f\"\ud83d\udcc2 Reading training data from: {train_path}\")\n    df = pd.read_csv(train_path)\n\n    X = df[[\"feature_1_normalized\", \"feature_2_normalized\"]]\n    y = df[\"target\"]\n\n    # Train model\n    model = LogisticRegression(max_iter=100)\n    model.fit(X, y)\n\n    # FIX: Save with .pkl extension\n    model_path = model_artifact.path + \".pkl\"\n    joblib.dump(model, model_path)\n\n    model_artifact.metadata[\"model_path\"] = model_path\n    model_artifact.metadata[\"model_type\"] = \"LogisticRegression\"\n    model_artifact.metadata[\"features\"] = [\"feature_1_normalized\", \"feature_2_normalized\"]\n\n    print(f\"\u2705 Model trained and saved to: {model_path}\")\n\n"
+          ],
+          "image": "python:3.11-slim"
+        }
+      }
+    }
+  },
+  "pipelineInfo": {
+    "description": "Fixed ML pipeline with proper artifact paths",
+    "name": "my-first-ml-pipeline-v2"
+  },
+  "root": {
+    "dag": {
+      "tasks": {
+        "evaluate-model": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-evaluate-model"
+          },
+          "dependentTasks": [
+            "process-data",
+            "train-model"
+          ],
+          "inputs": {
+            "artifacts": {
+              "model_artifact": {
+                "taskOutputArtifact": {
+                  "outputArtifactKey": "model_artifact",
+                  "producerTask": "train-model"
+                }
+              },
+              "test_data": {
+                "taskOutputArtifact": {
+                  "outputArtifactKey": "test_data",
+                  "producerTask": "process-data"
+                }
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "evaluate-model"
+          }
+        },
+        "load-data": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-load-data"
+          },
+          "inputs": {
+            "parameters": {
+              "num_samples": {
+                "componentInputParameter": "num_samples"
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "load-data"
+          }
+        },
+        "process-data": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-process-data"
+          },
+          "dependentTasks": [
+            "load-data"
+          ],
+          "inputs": {
+            "artifacts": {
+              "input_data": {
+                "taskOutputArtifact": {
+                  "outputArtifactKey": "output_data",
+                  "producerTask": "load-data"
+                }
+              }
+            },
+            "parameters": {
+              "test_size": {
+                "componentInputParameter": "test_size"
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "process-data"
+          }
+        },
+        "train-model": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-train-model"
+          },
+          "dependentTasks": [
+            "process-data"
+          ],
+          "inputs": {
+            "artifacts": {
+              "train_data": {
+                "taskOutputArtifact": {
+                  "outputArtifactKey": "train_data",
+                  "producerTask": "process-data"
+                }
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "train-model"
+          }
+        }
+      }
+    },
+    "inputDefinitions": {
+      "parameters": {
+        "num_samples": {
+          "defaultValue": 100.0,
+          "isOptional": true,
+          "parameterType": "NUMBER_INTEGER"
+        },
+        "test_size": {
+          "defaultValue": 0.2,
+          "isOptional": true,
+          "parameterType": "NUMBER_DOUBLE"
+        }
+      }
+    }
+  },
+  "schemaVersion": "2.1.0",
+  "sdkVersion": "kfp-2.16.0"
+}

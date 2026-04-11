@@ -1,0 +1,57 @@
+{
+  "billing_period": "2026-04",
+  "total_spend_usd": 12450.0,
+  "previous_month_usd": 8900.0,
+  "change_percent": 39.9,
+  "breakdown_by_project": [
+    {
+      "project": "sap-prod-project",
+      "spend_usd": 8200.0,
+      "top_services": [
+        {
+          "service": "Compute Engine",
+          "spend": 5400.0
+        },
+        {
+          "service": "Cloud Storage",
+          "spend": 1800.0
+        },
+        {
+          "service": "BigQuery",
+          "spend": 1000.0
+        }
+      ]
+    },
+    {
+      "project": "sap-dev-project",
+      "spend_usd": 4250.0,
+      "top_services": [
+        {
+          "service": "Compute Engine",
+          "spend": 3800.0
+        },
+        {
+          "service": "Cloud Storage",
+          "spend": 450.0
+        }
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "STOP_IDLE_VM",
+      "instance_id": "vm-dev-unused-03",
+      "potential_savings_monthly": 510.0,
+      "confidence": "HIGH"
+    },
+    {
+      "type": "RIGHTSIZE_VM",
+      "instance_id": "vm-payroll-prod-01",
+      "current_type": "n2-standard-8",
+      "recommended_type": "n2-standard-4",
+      "potential_savings_monthly": 127.5,
+      "confidence": "LOW",
+      "note": "Requires business context verification"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "business_processes": [
+    {
+      "process_id": "PAYROLL-MONTHLY",
+      "name": "Monthly Payroll Processing",
+      "system_id": "S4P",
+      "hosted_on": "vm-payroll-prod-01",
+      "schedule": {
+        "frequency": "MONTHLY",
+        "next_run": "2026-04-15T02:00:00Z",
+        "typical_duration_hours": 6,
+        "expected_cpu_percent": 90,
+        "expected_users": 0
+      },
+      "criticality": "CRITICAL",
+      "business_impact": "Delays affect 5000+ employee salaries",
+      "owner": "HR Operations",
+      "contact": "hr-ops@company.com"
+    },
+    {
+      "process_id": "FIORI-USERS",
+      "name": "Fiori User Sessions",
+      "system_id": "FLP",
+      "hosted_on": "vm-fiori-prod-02",
+      "schedule": {
+        "frequency": "CONTINUOUS",
+        "peak_hours": "09:00-17:00 EST",
+        "expected_users_peak": 150,
+        "expected_users_offpeak": 10
+      },
+      "criticality": "HIGH",
+      "business_impact": "User productivity affected",
+      "owner": "IT Operations"
+    },
+    {
+      "process_id": "DEV-SANDBOX",
+      "name": "Development Sandbox",
+      "system_id": "S4D",
+      "hosted_on": "vm-dev-unused-03",
+      "schedule": {
+        "frequency": "ON_DEMAND",
+        "last_used": "2026-03-15T10:00:00Z",
+        "expected_users": 5
+      },
+      "criticality": "LOW",
+      "business_impact": "Dev work delayed if unavailable",
+      "owner": "Development Team",
+      "notes": "Project ended March 2026. Pending decommission review."
+    }
+  ],
+  "active_batch_jobs": [
+    {
+      "job_id": "PAY-PREP-2026-04",
+      "process_id": "PAYROLL-MONTHLY",
+      "status": "RUNNING",
+      "started": "2026-04-07T18:00:00Z",
+      "expected_completion": "2026-04-07T22:00:00Z",
+      "description": "Payroll data preparation for April cycle"
+    }
+  ]
+}

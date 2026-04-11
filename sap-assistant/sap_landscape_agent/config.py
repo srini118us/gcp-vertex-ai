@@ -1,0 +1,6 @@
+PROJECT_ID = "genai-2222026"
+LOCATION = "us-central1"
+DATA_STORE_ID = "sap-landscape-docs_1775532657104"
+MODEL_NAME = "gemini-2.0-flash"
+AGENT_NAME = "sap_landscape_assistant"
+AGENT_DESCRIPTION = "AI assistant for SAP landscape setup and integration"

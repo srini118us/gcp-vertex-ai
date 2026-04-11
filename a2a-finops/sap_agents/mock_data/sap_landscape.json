@@ -1,0 +1,51 @@
+{
+  "landscape": "SAP Production Landscape",
+  "last_updated": "2026-04-07T19:00:00Z",
+  "systems": [
+    {
+      "system_id": "S4P",
+      "name": "S/4HANA Production",
+      "type": "S/4HANA",
+      "tier": "PRODUCTION",
+      "criticality": "CRITICAL",
+      "hosted_on": "vm-payroll-prod-01",
+      "dependencies": [
+        "IAS",
+        "BTP",
+        "Datasphere"
+      ],
+      "owner": "SAP Basis Team",
+      "sla": "99.9%"
+    },
+    {
+      "system_id": "FLP",
+      "name": "Fiori Launchpad Production",
+      "type": "SAP Fiori",
+      "tier": "PRODUCTION",
+      "criticality": "HIGH",
+      "hosted_on": "vm-fiori-prod-02",
+      "dependencies": [
+        "S4P",
+        "IAS"
+      ],
+      "owner": "UX Team",
+      "sla": "99.5%"
+    },
+    {
+      "system_id": "S4D",
+      "name": "S/4HANA Development",
+      "type": "S/4HANA",
+      "tier": "DEVELOPMENT",
+      "criticality": "LOW",
+      "hosted_on": "vm-dev-unused-03",
+      "dependencies": [],
+      "owner": "Dev Team",
+      "sla": "None"
+    }
+  ],
+  "vm_to_system_map": {
+    "vm-payroll-prod-01": "S4P",
+    "vm-fiori-prod-02": "FLP",
+    "vm-dev-unused-03": "S4D"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "SAP Business Context Agent",
+  "description": "Provides SAP system landscape and business process context",
+  "version": "1.0.0",
+  "endpoint": "http://localhost:8002/a2a",
+  "capabilities": [
+    "landscape_info",
+    "business_processes",
+    "batch_jobs",
+    "shutdown_safety"
+  ],
+  "tools": [
+    {
+      "name": "get_system_by_vm",
+      "description": "Map VM to SAP system"
+    },
+    {
+      "name": "explain_high_cpu_zero_users",
+      "description": "Explain why VM has high CPU with no users"
+    },
+    {
+      "name": "can_reduce_resources",
+      "description": "Decide if VM resources can be reduced"
+    },
+    {
+      "name": "get_critical_systems",
+      "description": "List systems that cannot be auto-scaled"
+    }
+  ],
+  "provides_context_for": [
+    "gcp_finops"
+  ]
+}

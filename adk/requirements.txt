@@ -1,0 +1,5 @@
+# Lab 03: ADK Agent Dependencies
+
+google-genai>=1.0.0
+python-dotenv>=1.0.0
+yfinance>=0.2.0
