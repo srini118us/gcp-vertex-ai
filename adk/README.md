@@ -1,4 +1,6 @@
-# Lab 03: ADK — SAP Basis Agent
+# ADK - Agent Development Kit
+
+Build AI agents with custom tools using Google's Agent Development Kit.
 
 ## What You'll Learn
 
@@ -10,25 +12,26 @@
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    SAP Basis Agent                       │
-├─────────────────────────────────────────────────────────┤
-│  User Query                                              │
-│       ↓                                                  │
-│  Gemini 2.5 Flash (with tools)                          │
-│       ↓                                                  │
-│  Tool Selection                                          │
-│       ↓                                                  │
-│  ┌─────────────┬─────────────┬─────────────────┐        │
-│  │get_tcode_info│get_failed_jobs│check_system_health│   │
-│  └─────────────┴─────────────┴─────────────────┘        │
-│       ↓                                                  │
-│  Tool Execution (mock data or real API)                 │
-│       ↓                                                  │
-│  Gemini formats final response                          │
-│       ↓                                                  │
-│  Response to User                                        │
-└─────────────────────────────────────────────────────────┘
+User Query
+    |
+    v
+Gemini 2.5 Flash (with tools)
+    |
+    v
+Tool Selection
+    |
+    +---> get_tcode_info
+    +---> get_failed_jobs
+    +---> check_system_health
+    |
+    v
+Tool Execution (mock data or real API)
+    |
+    v
+Gemini formats final response
+    |
+    v
+Response to User
 ```
 
 ## Tools Included
@@ -39,13 +42,25 @@
 | `get_failed_jobs` | List failed background jobs (mock) |
 | `check_system_health` | Check system status (mock) |
 
+## Files
+
+| File | Purpose |
+|------|---------|
+| `sap_basis_agent.py` | Main SAP Basis agent with tools |
+| `stockagent.py` | Alternative stock market agent example |
+| `requirements.txt` | Python dependencies |
+
 ## Setup
 
 ```bash
-cd lab-03-adk
+cd adk
+python -m venv venv
+source venv/bin/activate  # or .\venv\Scripts\activate on Windows
 pip install -r requirements.txt
-copy .env.example .env
-# Edit .env and add your GOOGLE_API_KEY
+
+# Set environment variables
+export GOOGLE_API_KEY=your-api-key
+# or create .env file
 ```
 
 ## Run
@@ -58,26 +73,20 @@ python sap_basis_agent.py
 
 ```
 You: What is SM58 used for?
-🔧 Agent calling tool: get_tcode_info
-   Arguments: {'tcode': 'SM58'}
-📋 Agent Response: SM58 is the tRFC Monitor...
+Agent: SM58 is the tRFC Monitor...
 
 You: Check the health of PRD system
-🔧 Agent calling tool: check_system_health
-   Arguments: {'system_id': 'PRD'}
-📋 Agent Response: PRD system status is WARNING...
+Agent: PRD system status is WARNING...
 
 You: Show me failed jobs in PRD
-🔧 Agent calling tool: get_failed_jobs
-   Arguments: {'system_id': 'PRD', 'hours': 24}
-📋 Agent Response: Found 3 failed jobs...
+Agent: Found 3 failed jobs...
 ```
 
-## System Design Concepts
+## Key Concepts
 
 ### Function Calling Pattern
 1. User sends query
-2. LLM decides which tool to call (if any)
+2. LLM decides which tool to call
 3. Tool executes and returns data
 4. LLM formats response using tool data
 
@@ -86,7 +95,8 @@ You: Show me failed jobs in PRD
 - Precise parameter types
 - Good descriptions for LLM understanding
 
-### Next Steps
-- Connect to real SAP OData APIs (replace mock data)
-- Add more tools (ST22 dumps, SM12 locks, etc.)
+## Next Steps
+
+- Connect to real SAP OData APIs
+- Add more tools (ST22 dumps, SM12 locks)
 - Deploy to Vertex AI Agent Engine
