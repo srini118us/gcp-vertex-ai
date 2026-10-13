@@ -92,3 +92,6 @@ __pycache__/
 .venv/
 
 .venv/
+
+.adk/
+bq-data-agent.data_agent/
