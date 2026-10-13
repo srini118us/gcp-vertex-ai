@@ -35,7 +35,7 @@ def get_analysis_window(days: int) -> dict:
     return {"start_date": (end - timedelta(days=days)).isoformat(), "end_date": end.isoformat()}
 from google.cloud import bigquery
 
-def shipping_delay_by_category(days: int) -> list[dict]:
+def shipping_delay_by_category(days: int) -> dict:
     """Governed metric: average shipped to delivered days per category,
     for items DELIVERED in the window [today minus days, today). Use this for any shipping delay question."""
     w = get_analysis_window(days)
@@ -51,19 +51,20 @@ def shipping_delay_by_category(days: int) -> list[dict]:
         bigquery.ScalarQueryParameter("start", "STRING", w["start_date"]),
         bigquery.ScalarQueryParameter("end", "STRING", w["end_date"])])
     rows = bigquery.Client(project=PROJECT).query(sql, job_config=cfg).result()
-    return [{"name": r["name"], "value": r["value"], "rows": r["row_count"]} for r in rows]
+    return {"metric": "shipping_delay_by_category", "window": w, "sql": sql,
+            "groups": [{"name": r["name"], "value": r["value"], "rows": r["row_count"]} for r in rows]}
 
 root_agent = LlmAgent(
-    name="data_analyst", model="gemini-3.5-flash", tools=[bq_mcp, assess_groups, get_analysis_window, shipping_delay_by_category],
+    name="data_analyst", model="gemini-2.5-flash", tools=[bq_mcp, assess_groups, get_analysis_window, shipping_delay_by_category],
     generate_content_config=types.GenerateContentConfig(
         http_options=types.HttpOptions(
             retry_options=types.HttpRetryOptions(attempts=5, initial_delay=5,  max_delay=60))),
-           instruction="""Enterprise data analyst for bigquery-public-data.thelook_ecommerce.
+               instruction="""Enterprise data analyst for bigquery-public-data.thelook_ecommerce.
 Inspect schema before querying. Run queries in project enterprise-agent-labs-1012.
-Read only. Always show the SQL used and cite exact figures from results.
+Read only. Show only SQL that actually ran: the sql field returned by a tool, or the exact query sent to execute_sql_readonly. Never write SQL from memory. Cite exact figures from results.
 If data cannot answer the question, say so; never estimate.
 For any relative period, call get_analysis_window first and filter with those exact dates as literals; never use CURRENT_TIMESTAMP or MAX dates.
 For shipping delay questions, use shipping_delay_by_category, not ad hoc SQL.
-After any grouped query, call assess_groups with the results and report its flags exactly; do not compute confidence yourself.
+After any grouped query, call assess_groups with the groups list and report its flags exactly; do not compute confidence yourself.
 Answer the question asked; offer alternatives in one line.""")
 
