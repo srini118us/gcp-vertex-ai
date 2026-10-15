@@ -38,11 +38,15 @@ def get_analysis_window(days: int) -> dict:
     """Deterministic reporting window. Anchor is today (UTC); future dated rows are excluded."""
     end = date.fromisoformat(os.getenv("AS_OF_DATE")) if os.getenv("AS_OF_DATE") else date.today()
     return {"start_date": (end - timedelta(days=days)).isoformat(), "end_date": end.isoformat()}
+from typing import Literal
 from google.cloud import bigquery
 
-def shipping_delay_by_category(days: int) -> dict:
+PERIODS = {"last_30_days": 30, "last_90_days": 90, "last_quarter": 90, "last_year": 365}
+
+def shipping_delay_by_category(period: Literal["last_30_days", "last_90_days", "last_quarter", "last_year"]) -> dict:
     """Governed metric: average shipped to delivered days per category,
     for items DELIVERED in the window [today minus days, today). Use this for any shipping delay question."""
+    days = PERIODS[period]
     w = get_analysis_window(days)
     sql = f"""SELECT p.category AS name,
       ROUND(AVG(TIMESTAMP_DIFF(oi.delivered_at, oi.shipped_at, SECOND))/86400, 4) AS value,
@@ -56,11 +60,12 @@ def shipping_delay_by_category(days: int) -> dict:
         bigquery.ScalarQueryParameter("start", "STRING", w["start_date"]),
         bigquery.ScalarQueryParameter("end", "STRING", w["end_date"])])
     rows = bigquery.Client(project=PROJECT).query(sql, job_config=cfg).result()
+    groups = [{"name": r["name"], "value": r["value"], "rows": r["row_count"]} for r in rows]
     return {"metric": "shipping_delay_by_category", "window": w, "sql": sql,
-            "groups": [{"name": r["name"], "value": r["value"], "rows": r["row_count"]} for r in rows]}
+            "groups": groups, "assessment": assess_groups(groups)}
 
 root_agent = LlmAgent(
-    name="data_analyst", model="gemini-2.5-flash", tools=[bq_mcp, assess_groups, get_analysis_window, shipping_delay_by_category],
+    name="data_analyst", model="gemini-2.5-flash", tools=[bq_mcp, get_analysis_window, shipping_delay_by_category],
     generate_content_config=types.GenerateContentConfig(
         http_options=types.HttpOptions(
             retry_options=types.HttpRetryOptions(attempts=5, initial_delay=5,  max_delay=60))),
