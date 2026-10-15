@@ -1,0 +1,497 @@
+{
+  "eval_set_id": "data_agent_core1",
+  "name": "data_agent_core1",
+  "eval_cases": [
+    {
+      "eval_id": "Which_product_categories_had_the_longest_averag",
+      "conversation": [
+        {
+          "invocation_id": "e-a827fa47-882f-44f3-b32e-6b2d1814a1c6",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Which product categories had the longest average shipping delay (shipped to delivered) in the last 90 days?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "In the last 90 days, \"Clothing Sets\" had the longest average shipping delay of 3.1664 days. However, this is a low confidence finding, as it is based on only 9 rows of data.\n\nThe next longest average shipping delay was for \"Dresses\" at 2.5492 days. This is considered the top reliable finding based on the number of data points.\n\nThe following categories had the next longest shipping delays:\n*   Intimates: 2.54 days\n*   Socks: 2.5047 days\n*   Sweaters: 2.4628 days\n\nThe differences between \"Dresses\" and \"Pants\" (the category with a 10.63% difference from \"Dresses\") are meaningful, while all other category-to-category differences are not meaningful. \"Jumpsuits & Rompers\" (2.2993 days) and \"Suits\" (2.2837 days) were also low confidence findings.",
+                "thought_signature": "AY89a1_j9lsMwtrqJ3e4A0nQbudWgo9Rv_PUxh_L-yItn3SqyWCm5hxGXLwRMUJqLAmC_0xsZx-oZyw0Va4J354tR5sqWUyZfw4zdnyt_ocY2zxsPKECAuw2I83noz8pYPc21XD_MW7xP3m4NxA9uPeejFDUqfe8bKZfy9S2AShMbKeEeGJbMQneyESEnk26x-Eyrm2INSKwOxoUpE0wqbCuO1T87haGMJxpdiMgqiLDS5rvXf5sFE6jpE1uefSQFynE9amj8OMAPs-tZiarId3eJ5rGC2eceJlfnNlmYBg_dX0t0C4HB9-tnD7GuwMvlY_xpWAxGI35GBsP_k9PJG2VdRVtNd-URNBDdrwVFwp8IM70X_5eyO9Po0ckbP5IuDr1o69CCCgYobnWrQxcTP3cmTzDqIxGxrKTb2Nx8ia1A8t2kBWB1NaD45bMX_6XihELJTVgFA9r7GkowVasZ37VMaIZxghbxKTLKTxWCjG6UyRLGtZJ0TqSM4Fk23HCOxnCTn1NRO0xdshokm03OeSDJvL1P0ADa0YPdH6FZIH3Vuz-T5vn62T8zfpZUl4dI7afL00r8AXu5BURktDpsI-C4x_H7hYoGvMa1aBlH34S9AXiIIjR8tFNi86PZiW2j8XpIwwk1PuNu7SXhUIMGjHBbh1pHygIL7QX8Tk7O0BtIGauHUTadCoX4yjAaED7-EotIl33QNLNVTjXhW3lmzZgef6K8KxJU_HtQbCVu-WNBa7Nl6EZhEENT4-foAry3DntFki0L3dqRsUMKIGP89fbQ54CRfck2fyxJzlbF2GPrrBUJB3szfxn5HRJQGr-O9tNzY79zy2X9i5nKzMGzJX5abVXzgdcGud5M8o37291dE1ZYlQ1YZ6_ZLWLON-TvH5ST1AwohItBSMDNpmpdKn4VBYIAtl-1lMd2eGWwAimm4DxApbTw-U63mugWeiOnA428X3--u87SkMNd4RQmp8SvPxUzoni5nCRUsWytTaZIYsvXHuL2pUYtvHwzn-acVf0lZSHakxHVa4b8SM59_G8n8t3tKSLmQA8uy8kOFaYvq3EGHBr84aSWYwQWaYtToxk50czogTXle7FYIrpkcD5Ch6oW23wrtvo_CClkaIV3uTp6GqzK6KFpDyhzmJWqHWui95LWku2PBzY9B0u8XQYkQObPK3g_4kMCnj5EJNN7PZvw1OuElh1xaLLUsBIXzfBfu3SyyXt7-Il2xRdeXXkInAMH_MErZKrAwJamyoC--Ho-rQzfbYA0yZRJxH17D1q5HXspFblBydmmP9q1Thd2GZcnv6ct3mIQGP9AoqWGDZt4wAAvD1Hm3atfEpIUSovoP1JCg8Dw0JeOm_scs8WoQI4HZotq3OTWp-sF_096p4FSgWb2Rqlt6Q2amN4sqNf2Q-fmcs0PJoCPfvxUQwSZ6DhN708FaXywOCI_rSFioSdETH0Z6hkqQtxCFjAHOy82dUuA7IO59-acaJ54BnD-ZDMVghCsWcr6sPKoDdqCpNOR4TPx4vFlL6Hp8IIBFEp3ewMUmVz7iTgFbBSDQ6Galdpk2tZ5VWqO8qk6wAqYhU_yP7rixdubR4KwF-cXT5tEVQhl3a0OmGw1CuW4l3AxY_WGyMShEu7QBD1_auiUo9ueihlDyVypioYmW9Y2izjYJJpS1LK7qpr3DKMv2Jk1oV9EDdUTkCr2RFD_hWqvVmmE-WuhQ04Ee1f4aQU71oHon6kjpgk_aL1Is0tqxd3ki5uR_qYbZHTzH2L72hoeiUFYjbdM8M-AW6Axa2-HtGu_B4jY_rR2OkOgsIYA6D58VqHJasY0Tg-sKHZN0-qXvNFgGs_bu0NRo9cc4WcIbKRBcPgO4W-5BB7ERTYccjTzhrvLwQ26uGTDJSZd0UdAGlkhxwAb_5F_PzN1kKCTrnqk6b5ASbKl6rU8NvCwXiBxIAU88dDNIWAt9gNuMGuGkkb7BBogb9hGvlVzYFu_QSChbX_V-HN24HtGfxrKc1Aqv3ZUgb_Znam4phxqLijIgcejoELG4Ba_Hsxd2iKKRGbUVI47cmJZMY4zqRAPXnSbuzyvAqN5_g_WnRI6vkerymz2QhJ9HxJ9akNXQSBSyYeVlJRbgtmLWrSORrpTIgHGxcy-BC3C8qYgjf5bjecs0enWSAF1IIosapuxCAodSNsdJNMgJRkbzSBetmZGu-CnhO8MZJ7P_inhJjSPR5EUKASzAK95Y9122TSVX9WIcqtEh1A2NYD9jBEu5Kzqw9oki8Jx2QMb0eEARhRqhCfXgzlDOGL4icbVd5ZNcKte2rz39eh29-2rNMGO_DMRu9830Eo9gaHBo-JZ0kdo-hpfasDf4iuoEkYs1ATL1qciByyjLXF_Tens0cLi8ry0Ir2xz24ly6vdKvgUUn2tYHjHv9qi89gJoHpjaQg1OFXOGcjWnJSKEIih7YUDU6udbs6d9mL-XPm6JIHKThCVsDlEu4sMBqZEbgsIJZGzM7CHFWudTaYeWRrse0KTkdEPCbpPDtLEwQ_kWfjmYbkRwQRR_4GqzXImhZj0daa6hWnwHaj94gjkplPgc7v5relgQSDaPg="
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "data_analyst",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-5494e52b-f44c-4e5f-b562-f9cf26a6461b",
+                        "args": {
+                          "days": 90
+                        },
+                        "name": "shipping_delay_by_category"
+                      },
+                      "thought_signature": "AY89a19KHFkZhpz9UGeqCns44-jHwQBNDMV6f0HU9wMhOqFA7ebJsSPieQud3u7CCE5DAOgd5syAC8CCokid9ZJ-Jje2gT-p4FlpY_dAuCI_sBjdTT54dm-KSDxgh5UWgTRK8q5isrBdl6yHRHYs4fER_W06EN3jQmxBm_FHxJy9mOkzPSqjLchzoODIzVlcshgt6Cgao_WluXjc_kRzD1gUVwvtQNTH79WeCU_M4cykRsLkkO9cX4ys2qo15taGUpK74GyLkGF5dZ6G0CitJ6qS8cR5h2P7ThuSSC-2pOcKkrcStjGo66zZlFa_o0O1NKSFMBZrLEjJ_aQHkHOX6BFMCwaVMKRDMSRgpbNeDCgpO5Xfsw7aDaD6wVHJKlsEx_5g0_3FGdcsxoJ_AVX6WcCwSuvmPcV5YtR1VERv07_5jLTMHBNl_qA4UmZiMwhWH5JDluX9JrMVi7QynK2wYQ0WM4lN1S1dVf37h1bPSj8sLAL--Q=="
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "data_analyst",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-5494e52b-f44c-4e5f-b562-f9cf26a6461b",
+                        "name": "shipping_delay_by_category",
+                        "response": {
+                          "metric": "shipping_delay_by_category",
+                          "window": {
+                            "start_date": "2026-07-16",
+                            "end_date": "2026-10-14"
+                          },
+                          "sql": "SELECT p.category AS name,\n      ROUND(AVG(TIMESTAMP_DIFF(oi.delivered_at, oi.shipped_at, SECOND))/86400, 4) AS value,\n      COUNT(*) AS row_count\n    FROM `enterprise-agent-labs-1012.thelook_golden.order_items` oi\n    JOIN `enterprise-agent-labs-1012.thelook_golden.products` p ON oi.product_id = p.id\n    WHERE oi.shipped_at IS NOT NULL\n      AND oi.delivered_at >= TIMESTAMP(@start) AND oi.delivered_at < TIMESTAMP(@end)\n    GROUP BY name ORDER BY value DESC",
+                          "groups": [
+                            {
+                              "name": "Clothing Sets",
+                              "value": 3.1664,
+                              "rows": 9
+                            },
+                            {
+                              "name": "Dresses",
+                              "value": 2.5492,
+                              "rows": 278
+                            },
+                            {
+                              "name": "Intimates",
+                              "value": 2.54,
+                              "rows": 598
+                            },
+                            {
+                              "name": "Socks",
+                              "value": 2.5047,
+                              "rows": 300
+                            },
+                            {
+                              "name": "Sweaters",
+                              "value": 2.4628,
+                              "rows": 532
+                            },
+                            {
+                              "name": "Pants & Capris",
+                              "value": 2.4619,
+                              "rows": 162
+                            },
+                            {
+                              "name": "Leggings",
+                              "value": 2.4523,
+                              "rows": 153
+                            },
+                            {
+                              "name": "Sleep & Lounge",
+                              "value": 2.4369,
+                              "rows": 518
+                            },
+                            {
+                              "name": "Fashion Hoodies & Sweatshirts",
+                              "value": 2.4347,
+                              "rows": 559
+                            },
+                            {
+                              "name": "Jeans",
+                              "value": 2.4324,
+                              "rows": 602
+                            },
+                            {
+                              "name": "Blazers & Jackets",
+                              "value": 2.4274,
+                              "rows": 169
+                            },
+                            {
+                              "name": "Active",
+                              "value": 2.4218,
+                              "rows": 415
+                            },
+                            {
+                              "name": "Outerwear & Coats",
+                              "value": 2.406,
+                              "rows": 447
+                            },
+                            {
+                              "name": "Maternity",
+                              "value": 2.4031,
+                              "rows": 262
+                            },
+                            {
+                              "name": "Shorts",
+                              "value": 2.3921,
+                              "rows": 538
+                            },
+                            {
+                              "name": "Swim",
+                              "value": 2.3904,
+                              "rows": 559
+                            },
+                            {
+                              "name": "Accessories",
+                              "value": 2.3846,
+                              "rows": 461
+                            },
+                            {
+                              "name": "Plus",
+                              "value": 2.3835,
+                              "rows": 202
+                            },
+                            {
+                              "name": "Skirts",
+                              "value": 2.3583,
+                              "rows": 103
+                            },
+                            {
+                              "name": "Underwear",
+                              "value": 2.3566,
+                              "rows": 360
+                            },
+                            {
+                              "name": "Suits & Sport Coats",
+                              "value": 2.3381,
+                              "rows": 230
+                            },
+                            {
+                              "name": "Socks & Hosiery",
+                              "value": 2.3079,
+                              "rows": 191
+                            },
+                            {
+                              "name": "Tops & Tees",
+                              "value": 2.3067,
+                              "rows": 568
+                            },
+                            {
+                              "name": "Jumpsuits & Rompers",
+                              "value": 2.2993,
+                              "rows": 48
+                            },
+                            {
+                              "name": "Suits",
+                              "value": 2.2837,
+                              "rows": 53
+                            },
+                            {
+                              "name": "Pants",
+                              "value": 2.2783,
+                              "rows": 346
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "data_analyst",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-dc57e614-5cf8-47f4-b96c-5e6d4e45583f",
+                        "args": {
+                          "groups": [
+                            {
+                              "name": "Clothing Sets",
+                              "value": 3.1664,
+                              "rows": 9
+                            },
+                            {
+                              "rows": 278,
+                              "value": 2.5492,
+                              "name": "Dresses"
+                            },
+                            {
+                              "rows": 598,
+                              "value": 2.54,
+                              "name": "Intimates"
+                            },
+                            {
+                              "name": "Socks",
+                              "value": 2.5047,
+                              "rows": 300
+                            },
+                            {
+                              "name": "Sweaters",
+                              "rows": 532,
+                              "value": 2.4628
+                            },
+                            {
+                              "rows": 162,
+                              "value": 2.4619,
+                              "name": "Pants & Capris"
+                            },
+                            {
+                              "value": 2.4523,
+                              "rows": 153,
+                              "name": "Leggings"
+                            },
+                            {
+                              "name": "Sleep & Lounge",
+                              "value": 2.4369,
+                              "rows": 518
+                            },
+                            {
+                              "value": 2.4347,
+                              "rows": 559,
+                              "name": "Fashion Hoodies & Sweatshirts"
+                            },
+                            {
+                              "name": "Jeans",
+                              "value": 2.4324,
+                              "rows": 602
+                            },
+                            {
+                              "value": 2.4274,
+                              "name": "Blazers & Jackets",
+                              "rows": 169
+                            },
+                            {
+                              "value": 2.4218,
+                              "rows": 415,
+                              "name": "Active"
+                            },
+                            {
+                              "rows": 447,
+                              "value": 2.406,
+                              "name": "Outerwear & Coats"
+                            },
+                            {
+                              "name": "Maternity",
+                              "value": 2.4031,
+                              "rows": 262
+                            },
+                            {
+                              "value": 2.3921,
+                              "name": "Shorts",
+                              "rows": 538
+                            },
+                            {
+                              "rows": 559,
+                              "value": 2.3904,
+                              "name": "Swim"
+                            },
+                            {
+                              "rows": 461,
+                              "name": "Accessories",
+                              "value": 2.3846
+                            },
+                            {
+                              "name": "Plus",
+                              "value": 2.3835,
+                              "rows": 202
+                            },
+                            {
+                              "name": "Skirts",
+                              "value": 2.3583,
+                              "rows": 103
+                            },
+                            {
+                              "name": "Underwear",
+                              "rows": 360,
+                              "value": 2.3566
+                            },
+                            {
+                              "name": "Suits & Sport Coats",
+                              "value": 2.3381,
+                              "rows": 230
+                            },
+                            {
+                              "value": 2.3079,
+                              "rows": 191,
+                              "name": "Socks & Hosiery"
+                            },
+                            {
+                              "rows": 568,
+                              "value": 2.3067,
+                              "name": "Tops & Tees"
+                            },
+                            {
+                              "value": 2.2993,
+                              "name": "Jumpsuits & Rompers",
+                              "rows": 48
+                            },
+                            {
+                              "name": "Suits",
+                              "rows": 53,
+                              "value": 2.2837
+                            },
+                            {
+                              "rows": 346,
+                              "value": 2.2783,
+                              "name": "Pants"
+                            }
+                          ]
+                        },
+                        "name": "assess_groups"
+                      },
+                      "thought_signature": "AY89a1-Hu7GFzpwak-ShfSSkLmf15YDPMYvcxBHnPmCVnKt7qmDVHz5RbANBcMQ7CDBWYPU_MBaluUMFeyn4mZOktd_zrSKjo2ltkjxfHmuZAolhbuA0Zu4kMx5JBJ3q6s7WJgvneOxKyy9EblV7TMmL7J_vz291XK-LImZ5RFZvVdeMTSNuuQjUDwOvuJ9XhW6VV4yklxjWd9EMLgNS911SHHiv_tDqwQJFemRx3tgzLMTonHTeLe8Ic49sn3yLShW_n1CZIvf3fjDNQWEqhhXpBenBZu_kJqHXGhTPB2seVB5JqUxNM2805FKrlFEJLUWhvkvbLmBmkgwRn4jMhDwFGLQXF-keH5nMtVi_Q5v4W5VPYXhiN9PT9ypyap5Nlhs7QJCSriYLs1lgUpzxDRYvxffcYNYAC_ZtjA5kqCV4m6nVfV8RsLjuKLB-iaUoqkBX0b7OqZQI-zESWxMD19dKB83UYpspeKsvNxnkTKudGXwovvTm4aoLDHZip3e-cMUX_HgAgu2rlTFDxWNlfcVaWgpfBbGmZXi2UlvB3fVMhh7xqHaMwE54uTYAcjC2xJkAp4NTouXc_Kl_hxXs-pwrgCRrcKL0aURM2a7415JSSEqFdEiG7SZq2hc8UHd28_l5QbHcT9YGYlAIRfJrOWGPDA=="
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "data_analyst",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-dc57e614-5cf8-47f4-b96c-5e6d4e45583f",
+                        "name": "assess_groups",
+                        "response": {
+                          "low_confidence": [
+                            "Clothing Sets",
+                            "Jumpsuits & Rompers",
+                            "Suits"
+                          ],
+                          "top_reliable": "Dresses",
+                          "comparisons": [
+                            {
+                              "vs": "Intimates",
+                              "diff_pct": 0.36,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Socks",
+                              "diff_pct": 1.75,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Sweaters",
+                              "diff_pct": 3.39,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Pants & Capris",
+                              "diff_pct": 3.42,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Leggings",
+                              "diff_pct": 3.8,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Sleep & Lounge",
+                              "diff_pct": 4.41,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Fashion Hoodies & Sweatshirts",
+                              "diff_pct": 4.49,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Jeans",
+                              "diff_pct": 4.58,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Blazers & Jackets",
+                              "diff_pct": 4.78,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Active",
+                              "diff_pct": 5.0,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Outerwear & Coats",
+                              "diff_pct": 5.62,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Maternity",
+                              "diff_pct": 5.73,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Shorts",
+                              "diff_pct": 6.16,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Swim",
+                              "diff_pct": 6.23,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Accessories",
+                              "diff_pct": 6.46,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Plus",
+                              "diff_pct": 6.5,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Skirts",
+                              "diff_pct": 7.49,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Underwear",
+                              "diff_pct": 7.56,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Suits & Sport Coats",
+                              "diff_pct": 8.28,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Socks & Hosiery",
+                              "diff_pct": 9.47,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Tops & Tees",
+                              "diff_pct": 9.51,
+                              "meaningful": false
+                            },
+                            {
+                              "vs": "Pants",
+                              "diff_pct": 10.63,
+                              "meaningful": true
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1792031805.406873
+        }
+      ],
+      "session_input": {
+        "app_name": "data_agent",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1792032046.9659107
+    }
+  ],
+  "creation_timestamp": 1792032035.0261216
+}
