@@ -59,6 +59,12 @@ def needs_approval(order_id: int, causes: list, tool_context: ToolContext = None
 
 def issue_store_credit(order_id: int, causes: list[Cause]) -> dict:
     """Issues the policy credit. Recomputes days late and the offer itself; never trusts a model supplied amount."""
+    dup = list(_client().query(
+        f"SELECT COUNT(*) n FROM `{P}.cx_data.credits` WHERE order_id = @id",
+        job_config=bigquery.QueryJobConfig(query_parameters=[
+            bigquery.ScalarQueryParameter("id", "INT64", order_id)])).result())[0].n
+    if dup:
+        return {"issued": False, "reason": "credit already issued for this order"}
     o = _offer(order_id, causes)
     if o.get("error") or o["credit_pct"] == 0:
         return {"issued": False, "reason": o.get("error", "no compensation due")}
