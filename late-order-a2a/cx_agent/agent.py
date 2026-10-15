@@ -6,6 +6,7 @@ from google.auth import impersonated_credentials
 from google.cloud import bigquery
 from google.adk.agents import LlmAgent
 from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
+from google.adk.tools import FunctionTool, ToolContext
 from google.adk.tools.agent_tool import AgentTool
 
 Cause = Literal["NOT_YET_SHIPPED", "WAREHOUSE_DELAY", "TRANSIT_DELAY", "WITHIN_NORMAL"]
@@ -50,6 +51,27 @@ def propose_compensation(causes: list[Cause], days_late: int) -> dict:
     return {"offer": f"{pct}% store credit", "credit_pct": pct, "driver": driver,
             "all_causes": causes, "requires_approval": pct >= 20}
 
+def _offer(order_id: int, causes: list) -> dict:
+    return propose_compensation(causes, get_order_status(order_id)["days_late"])
+
+def needs_approval(order_id: int, causes: list, tool_context: ToolContext = None) -> bool:
+    return _offer(order_id, causes)["requires_approval"]
+
+def issue_store_credit(order_id: int, causes: list[Cause]) -> dict:
+    """Issues the policy credit. Recomputes days late and the offer itself; never trusts a model supplied amount."""
+    o = _offer(order_id, causes)
+    if o.get("error") or o["credit_pct"] == 0:
+        return {"issued": False, "reason": o.get("error", "no compensation due")}
+    sql = f"""INSERT `{P}.cx_data.credits` (order_id, credit_pct, driver, approval, issued_at)
+              VALUES (@id, @pct, @drv, @appr, CURRENT_TIMESTAMP())"""
+    cfg = bigquery.QueryJobConfig(query_parameters=[
+        bigquery.ScalarQueryParameter("id", "INT64", order_id),
+        bigquery.ScalarQueryParameter("pct", "INT64", o["credit_pct"]),
+        bigquery.ScalarQueryParameter("drv", "STRING", o["driver"]),
+        bigquery.ScalarQueryParameter("appr", "STRING", "human_confirmed" if o["requires_approval"] else "auto_policy")])
+    _client().query(sql, job_config=cfg).result()
+    return {"issued": True, "credit_pct": o["credit_pct"], "driver": o["driver"]}
+
 logistics = RemoteA2aAgent(
     name="logistics_agent",
     description="Supply Chain agent that diagnoses why a specific order is delayed.",
@@ -61,5 +83,7 @@ root_agent = LlmAgent(
 1. Call get_order_status. If not late, say so and stop.
 2. If late, call logistics_agent for the root cause; you cannot access logistics data yourself.
 3. Call propose_compensation with the cause and days_late; never invent offers.
-4. If requires_approval is true, say the offer needs supervisor approval; do not promise it.""",
-    tools=[get_order_status, propose_compensation, AgentTool(agent=logistics)])
+4. If an offer exists, call issue_store_credit once with the order_id and all cause codes. Approval, when required, is requested automatically; never claim a credit was issued unless the tool returns issued true.""",
+    tools=[get_order_status, propose_compensation, AgentTool(agent=logistics),
+           FunctionTool(issue_store_credit, require_confirmation=needs_approval)],
+)
