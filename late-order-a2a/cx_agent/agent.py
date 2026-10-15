@@ -1,0 +1,65 @@
+from typing import Literal
+import os
+from datetime import date, timedelta
+import google.auth
+from google.auth import impersonated_credentials
+from google.cloud import bigquery
+from google.adk.agents import LlmAgent
+from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
+from google.adk.tools.agent_tool import AgentTool
+
+Cause = Literal["NOT_YET_SHIPPED", "WAREHOUSE_DELAY", "TRANSIT_DELAY", "WITHIN_NORMAL"]
+
+P = "enterprise-agent-labs-1012"
+SLA_DAYS = 5  # business rule: promised delivery within 5 days of order
+
+def _client():
+    src, _ = google.auth.default()
+    sa = os.getenv("CX_SA")
+    creds = impersonated_credentials.Credentials(source_credentials=src, target_principal=sa,
+        target_scopes=["https://www.googleapis.com/auth/cloud-platform"]) if sa else src
+    return bigquery.Client(project=P, credentials=creds)
+
+def get_order_status(order_id: int) -> dict:
+    """Customer facing order status from CX data, with days late versus the delivery promise."""
+    sql = f"""SELECT order_id, status, created_at, shipped_at, delivered_at, num_of_item
+              FROM `{P}.cx_data.orders` WHERE order_id = @id"""
+    cfg = bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter("id", "INT64", order_id)])
+    rows = [dict(r) for r in _client().query(sql, job_config=cfg).result()]
+    if not rows:
+        return {"order_id": order_id, "found": False}
+    o = rows[0]
+    as_of = date.fromisoformat(os.getenv("AS_OF_DATE", date.today().isoformat()))
+    promised = o["created_at"].date() + timedelta(days=SLA_DAYS)
+    actual = o["delivered_at"].date() if o["delivered_at"] else as_of
+    return {"order_id": order_id, "found": True, "status": o["status"], "items": o["num_of_item"],
+            "ordered": o["created_at"].date().isoformat(), "promised_by": promised.isoformat(),
+            "delivered": o["delivered_at"].date().isoformat() if o["delivered_at"] else None,
+            "days_late": max((actual - promised).days, 0)}
+
+def propose_compensation(causes: list[Cause], days_late: int) -> dict:
+    """Deterministic policy. causes: every item cause from the Logistics agent. Most severe wins."""
+    bad = [c for c in causes if c not in ("NOT_YET_SHIPPED", "WAREHOUSE_DELAY", "TRANSIT_DELAY", "WITHIN_NORMAL")]
+    if bad: return {"error": f"Unknown cause codes {bad}; use the exact codes from logistics_agent"}
+    rates = {"NOT_YET_SHIPPED": 20, "WAREHOUSE_DELAY": 15, "TRANSIT_DELAY": 10}
+    actionable = [c for c in causes if c in rates]
+    if days_late == 0 or not actionable:
+        return {"offer": "none", "credit_pct": 0, "requires_approval": False}
+    driver = max(actionable, key=rates.get)
+    pct = min(rates[driver] + 5 * max(days_late - 3, 0), 30)
+    return {"offer": f"{pct}% store credit", "credit_pct": pct, "driver": driver,
+            "all_causes": causes, "requires_approval": pct >= 20}
+
+logistics = RemoteA2aAgent(
+    name="logistics_agent",
+    description="Supply Chain agent that diagnoses why a specific order is delayed.",
+    agent_card="http://localhost:8001/.well-known/agent-card.json")
+
+root_agent = LlmAgent(
+    name="cx_agent", model="gemini-2.5-flash",
+    instruction="""You are the Customer Experience agent for late order inquiries.
+1. Call get_order_status. If not late, say so and stop.
+2. If late, call logistics_agent for the root cause; you cannot access logistics data yourself.
+3. Call propose_compensation with the cause and days_late; never invent offers.
+4. If requires_approval is true, say the offer needs supervisor approval; do not promise it.""",
+    tools=[get_order_status, propose_compensation, AgentTool(agent=logistics)])
