@@ -3,6 +3,8 @@ from google.genai import types
 from google.adk.agents import LlmAgent
 from google.adk.tools.mcp_tool.mcp_toolset import McpToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
+import os
+DATASET = os.getenv("DATASET", "bigquery-public-data.thelook_ecommerce")
 
 PROJECT = "enterprise-agent-labs-1012"
 creds, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/bigquery"])
@@ -34,7 +36,7 @@ from datetime import date, timedelta
 
 def get_analysis_window(days: int) -> dict:
     """Deterministic reporting window. Anchor is today (UTC); future dated rows are excluded."""
-    end = date.today()
+    end = date.fromisoformat(os.getenv("AS_OF_DATE")) if os.getenv("AS_OF_DATE") else date.today()
     return {"start_date": (end - timedelta(days=days)).isoformat(), "end_date": end.isoformat()}
 from google.cloud import bigquery
 
@@ -42,11 +44,11 @@ def shipping_delay_by_category(days: int) -> dict:
     """Governed metric: average shipped to delivered days per category,
     for items DELIVERED in the window [today minus days, today). Use this for any shipping delay question."""
     w = get_analysis_window(days)
-    sql = """SELECT p.category AS name,
+    sql = f"""SELECT p.category AS name,
       ROUND(AVG(TIMESTAMP_DIFF(oi.delivered_at, oi.shipped_at, SECOND))/86400, 4) AS value,
       COUNT(*) AS row_count
-    FROM `bigquery-public-data.thelook_ecommerce.order_items` oi
-    JOIN `bigquery-public-data.thelook_ecommerce.products` p ON oi.product_id = p.id
+    FROM `{DATASET}.order_items` oi
+    JOIN `{DATASET}.products` p ON oi.product_id = p.id
     WHERE oi.shipped_at IS NOT NULL
       AND oi.delivered_at >= TIMESTAMP(@start) AND oi.delivered_at < TIMESTAMP(@end)
     GROUP BY name ORDER BY value DESC"""
