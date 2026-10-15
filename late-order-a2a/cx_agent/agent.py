@@ -54,16 +54,18 @@ def propose_compensation(causes: list[Cause], days_late: int) -> dict:
 def _offer(order_id: int, causes: list) -> dict:
     return propose_compensation(causes, get_order_status(order_id)["days_late"])
 
+def _already_issued(order_id: int) -> bool:
+    return list(_client().query(
+        f"SELECT COUNT(*) n FROM `{P}.cx_data.credits` WHERE order_id = @id",
+        job_config=bigquery.QueryJobConfig(query_parameters=[
+            bigquery.ScalarQueryParameter("id", "INT64", order_id)])).result())[0].n > 0
+
 def needs_approval(order_id: int, causes: list, tool_context: ToolContext = None) -> bool:
-    return _offer(order_id, causes)["requires_approval"]
+    return not _already_issued(order_id) and _offer(order_id, causes)["requires_approval"]
 
 def issue_store_credit(order_id: int, causes: list[Cause]) -> dict:
     """Issues the policy credit. Recomputes days late and the offer itself; never trusts a model supplied amount."""
-    dup = list(_client().query(
-        f"SELECT COUNT(*) n FROM `{P}.cx_data.credits` WHERE order_id = @id",
-        job_config=bigquery.QueryJobConfig(query_parameters=[
-            bigquery.ScalarQueryParameter("id", "INT64", order_id)])).result())[0].n
-    if dup:
+    if _already_issued(order_id):
         return {"issued": False, "reason": "credit already issued for this order"}
     o = _offer(order_id, causes)
     if o.get("error") or o["credit_pct"] == 0:
