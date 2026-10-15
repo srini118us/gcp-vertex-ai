@@ -95,3 +95,5 @@ __pycache__/
 
 .adk/
 bq-data-agent.data_agent/
+
+!*.evalset.json
