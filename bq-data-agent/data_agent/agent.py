@@ -8,9 +8,12 @@ PROJECT = "enterprise-agent-labs-1012"
 creds, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/bigquery"])
 creds.refresh(google.auth.transport.requests.Request())
 
+
 bq_mcp = McpToolset(connection_params=StreamableHTTPConnectionParams(
     url="https://bigquery.googleapis.com/mcp",
-    headers={"Authorization": f"Bearer {creds.token}", "x-goog-user-project": PROJECT}))
+    headers={"Authorization": f"Bearer {creds.token}", "x-goog-user-project": PROJECT}),
+    tool_filter=["list_dataset_ids", "list_table_ids", "get_dataset_info",
+                 "get_table_info", "execute_sql_readonly"])
 
 def assess_groups(groups: list[dict]) -> dict:
     """Deterministic confidence check. groups: [{"name": str, "value": float, "rows": int}].
