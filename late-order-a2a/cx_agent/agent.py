@@ -1,5 +1,9 @@
-from typing import Literal
 import os
+from dotenv import load_dotenv
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+print("CX config:", os.getenv("GOOGLE_GENAI_USE_VERTEXAI"), os.getenv("GOOGLE_CLOUD_PROJECT"),
+      "keys:", [k for k in os.environ if "API_KEY" in k])
+from typing import Literal
 import uuid, httpx
 from datetime import date, timedelta
 import google.auth
