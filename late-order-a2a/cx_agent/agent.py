@@ -12,6 +12,7 @@ Cause = Literal["NOT_YET_SHIPPED", "WAREHOUSE_DELAY", "TRANSIT_DELAY", "WITHIN_N
 
 P = "enterprise-agent-labs-1012"
 SLA_DAYS = 5  # business rule: promised delivery within 5 days of order
+CREDITS = os.getenv("CREDITS_TABLE", "credits")
 LOGISTICS_URL = os.getenv("LOGISTICS_URL", "http://localhost:8001")
 
 def diagnose_delay(order_id: int) -> dict:
@@ -69,7 +70,7 @@ def _offer(order_id: int, causes: list) -> dict:
 
 def _already_issued(order_id: int) -> bool:
     return list(_client().query(
-        f"SELECT COUNT(*) n FROM `{P}.cx_data.credits` WHERE order_id = @id",
+        f"SELECT COUNT(*) n FROM `{P}.cx_data.{CREDITS}` WHERE order_id = @id",
         job_config=bigquery.QueryJobConfig(query_parameters=[
             bigquery.ScalarQueryParameter("id", "INT64", order_id)])).result())[0].n > 0
 
@@ -83,7 +84,7 @@ def issue_store_credit(order_id: int, causes: list[Cause]) -> dict:
     o = _offer(order_id, causes)
     if o.get("error") or o["credit_pct"] == 0:
         return {"issued": False, "reason": o.get("error", "no compensation due")}
-    sql = f"""INSERT `{P}.cx_data.credits` (order_id, credit_pct, driver, approval, issued_at)
+    sql = f"""INSERT `{P}.cx_data.{CREDITS}` (order_id, credit_pct, driver, approval, issued_at)
               VALUES (@id, @pct, @drv, @appr, CURRENT_TIMESTAMP())"""
     cfg = bigquery.QueryJobConfig(query_parameters=[
         bigquery.ScalarQueryParameter("id", "INT64", order_id),
