@@ -8,6 +8,7 @@ import uuid, httpx
 from datetime import date, timedelta
 import google.auth
 from google.auth import impersonated_credentials
+import google.auth.transport.requests as gar
 from google.cloud import bigquery
 from google.adk.agents import LlmAgent
 from google.adk.tools import FunctionTool, ToolContext
@@ -19,12 +20,23 @@ SLA_DAYS = 5  # business rule: promised delivery within 5 days of order
 CREDITS = os.getenv("CREDITS_TABLE", "credits")
 LOGISTICS_URL = os.getenv("LOGISTICS_URL", "http://localhost:8001")
 
+def _auth_header() -> dict:
+    if not LOGISTICS_URL.startswith("https"):
+        return {}
+    src, _ = google.auth.default()
+    sa = os.getenv("CX_SA")
+    base = impersonated_credentials.Credentials(source_credentials=src, target_principal=sa,
+        target_scopes=["https://www.googleapis.com/auth/cloud-platform"])
+    idc = impersonated_credentials.IDTokenCredentials(base, target_audience=LOGISTICS_URL, include_email=True)
+    idc.refresh(gar.Request())
+    return {"Authorization": f"Bearer {idc.token}"}
+
 def diagnose_delay(order_id: int) -> dict:
     """Asks the remote Supply Chain Logistics agent, over A2A, for the delay root cause of one order."""
     payload = {"jsonrpc": "2.0", "id": str(uuid.uuid4()), "method": "message/send",
                "params": {"message": {"role": "user", "messageId": str(uuid.uuid4()),
                           "parts": [{"kind": "text", "text": f"Diagnose delay for order_id={order_id}"}]}}}
-    r = httpx.post(LOGISTICS_URL, json=payload, timeout=120)
+    r = httpx.post(LOGISTICS_URL, json=payload, headers=_auth_header(), timeout=120)
     r.raise_for_status()
     result = r.json().get("result", {})
     texts = [p.get("text", "") for a in result.get("artifacts", []) for p in a.get("parts", []) if p.get("kind") == "text"]

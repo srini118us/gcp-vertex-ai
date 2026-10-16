@@ -1,0 +1,5 @@
+google-adk[a2a]==2.4.*
+a2a-sdk[http-server]==0.3.26
+google-cloud-bigquery
+uvicorn
+python-dotenv
