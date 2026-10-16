@@ -1,18 +1,31 @@
 from typing import Literal
 import os
+import uuid, httpx
 from datetime import date, timedelta
 import google.auth
 from google.auth import impersonated_credentials
 from google.cloud import bigquery
 from google.adk.agents import LlmAgent
-from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
 from google.adk.tools import FunctionTool, ToolContext
-from google.adk.tools.agent_tool import AgentTool
 
 Cause = Literal["NOT_YET_SHIPPED", "WAREHOUSE_DELAY", "TRANSIT_DELAY", "WITHIN_NORMAL"]
 
 P = "enterprise-agent-labs-1012"
 SLA_DAYS = 5  # business rule: promised delivery within 5 days of order
+LOGISTICS_URL = os.getenv("LOGISTICS_URL", "http://localhost:8001")
+
+def diagnose_delay(order_id: int) -> dict:
+    """Asks the remote Supply Chain Logistics agent, over A2A, for the delay root cause of one order."""
+    payload = {"jsonrpc": "2.0", "id": str(uuid.uuid4()), "method": "message/send",
+               "params": {"message": {"role": "user", "messageId": str(uuid.uuid4()),
+                          "parts": [{"kind": "text", "text": f"Diagnose delay for order_id={order_id}"}]}}}
+    r = httpx.post(LOGISTICS_URL, json=payload, timeout=120)
+    r.raise_for_status()
+    result = r.json().get("result", {})
+    texts = [p.get("text", "") for a in result.get("artifacts", []) for p in a.get("parts", []) if p.get("kind") == "text"]
+    if not texts:
+        texts = [p.get("text", "") for p in result.get("parts", []) if p.get("kind") == "text"]
+    return {"order_id": order_id, "a2a_state": result.get("status", {}).get("state"), "logistics_reply": "\n".join(texts)}
 
 def _client():
     src, _ = google.auth.default()
@@ -80,18 +93,13 @@ def issue_store_credit(order_id: int, causes: list[Cause]) -> dict:
     _client().query(sql, job_config=cfg).result()
     return {"issued": True, "credit_pct": o["credit_pct"], "driver": o["driver"]}
 
-logistics = RemoteA2aAgent(
-    name="logistics_agent",
-    description="Supply Chain agent that diagnoses why a specific order is delayed.",
-    agent_card="http://localhost:8001/.well-known/agent-card.json")
-
 root_agent = LlmAgent(
     name="cx_agent", model="gemini-2.5-flash",
     instruction="""You are the Customer Experience agent for late order inquiries.
 1. Call get_order_status. If not late, say so and stop.
-2. If late, call logistics_agent for the root cause; you cannot access logistics data yourself.
+2. If late, call diagnose_delay with the order_id.
 3. Call propose_compensation with the cause and days_late; never invent offers.
 4. If an offer exists, call issue_store_credit once with the order_id and all cause codes. Approval, when required, is requested automatically; never claim a credit was issued unless the tool returns issued true.""",
-    tools=[get_order_status, propose_compensation, AgentTool(agent=logistics),
+    tools=[get_order_status, propose_compensation, diagnose_delay,
            FunctionTool(issue_store_credit, require_confirmation=needs_approval)],
 )
