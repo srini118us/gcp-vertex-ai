@@ -103,3 +103,10 @@ bq-data-agent/docs/screenshots/
 bq-data-agent/docs/
 
 late-order-a2a/docs/
+
+# Local lab runbooks, screenshots, raw output
+*/docs/
+
+# Claude Code: track only project skills
+.claude/*
+!.claude/skills/
