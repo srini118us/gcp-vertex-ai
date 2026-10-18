@@ -111,7 +111,7 @@ def issue_store_credit(order_id: int, causes: list[Cause]) -> dict:
     return {"issued": True, "credit_pct": o["credit_pct"], "driver": o["driver"]}
 
 root_agent = LlmAgent(
-    name="cx_agent", model="gemini-2.5-flash",
+    name="cx_agent", model="gemini-3.8-flash",
     instruction="""You are the Customer Experience agent for late order inquiries.
 1. Call get_order_status. If not late, say so and stop.
 2. If late, call diagnose_delay with the order_id.

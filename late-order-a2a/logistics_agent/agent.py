@@ -12,7 +12,7 @@ def delay_root_cause(order_id: int) -> dict:
     return diagnosis.delay_root_cause(order_id)
 
 root_agent = LlmAgent(
-    name="logistics_agent", model="gemini-2.5-flash",
+    name="logistics_agent", model="gemini-3.8-flash",
     description="Supply Chain team agent. Diagnoses why a specific order is delayed: warehouse lag versus transit time, against the distribution center baseline.",
     instruction="""You diagnose delivery delays for one order at a time. Always call delay_root_cause.
 Report each item's cause exactly as returned, with the hours compared to the baseline.
