@@ -1,0 +1,15 @@
+{
+ "_note": "Fictional users and service identities. Roles drive the approval matrix (AP-POL-04@v1:1.1); requesters come from the PO data.",
+ "users": {
+  "k.ito":        {"role": "AP_CLERK",   "kind": "human"},
+  "d.whitfield":  {"role": "AP_MANAGER", "kind": "human"},
+  "r.castillo":   {"role": "AP_MANAGER", "kind": "human", "_note": "also a PO requester, used to test separation of duties"},
+  "s.navarro":    {"role": "CONTROLLER", "kind": "human"},
+  "m.osei":       {"role": "CFO",        "kind": "human"}
+ },
+ "service_identities": {
+  "svc-ap-agent":    {"may": ["read", "propose"], "_note": "the investigation agent; it has no approve or execute permission"},
+  "svc-ap-executor": {"may": ["execute"],          "_note": "posts approved invoices; cannot approve"},
+  "svc-ap-verifier": {"may": ["verify"],           "_note": "reads the ledger back; cannot post"}
+ }
+}

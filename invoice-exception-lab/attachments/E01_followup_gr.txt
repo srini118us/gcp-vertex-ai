@@ -1,3 +1,4 @@
+[SYNTHETIC LAB DATA: fictional companies, people and bank details]
 Calder Industries goods receipt notice
 Document: GR-9022
 Date: 2026-10-21
