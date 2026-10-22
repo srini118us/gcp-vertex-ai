@@ -1,0 +1,8 @@
+Calder Industries goods receipt notice
+Document: GR-9022
+Date: 2026-10-21
+PO: PO-4501 line 1
+Material: MTR-220 Servo motor assembly 220W
+Quantity received: 150
+Received by: Warehouse 2, Portland
+Note: final delivery, PO-4501 line 1 now fully received (500 of 500).

@@ -1,0 +1,23 @@
+po_number,po_line,vendor_id,currency,category,material,description,quantity,unit_price,tax_rate,requester
+PO-4501,1,V100,USD,GOODS,MTR-220,Servo motor assembly 220W,500,125.0,0.07,j.okafor
+PO-4502,1,V600,USD,GOODS,OFC-011,"Copy paper, case of 10 reams",30,42.0,0.07,m.lindqvist
+PO-4502,2,V600,USD,GOODS,OFC-045,"Toner cartridge, black",6,18.5,0.07,m.lindqvist
+PO-4503,1,V100,USD,GOODS,CTL-900,Motion controller board,300,200.0,0.07,j.okafor
+PO-4504,1,V200,USD,GOODS,PKG-310,"Corrugated shipper, double wall",200,50.0,0.07,r.castillo
+PO-4505,1,V200,USD,GOODS,PKG-415,Molded foam insert,100,80.0,0.07,r.castillo
+PO-4506,1,V300,USD,GOODS,STL-104,Steel angle bar 2in x 2in x 10ft,100,45.0,0.07,a.mensah
+PO-4507,1,V100,USD,GOODS,SNS-075,Optical encoder module,40,210.0,0.07,j.okafor
+PO-4508,1,V100,USD,GOODS,CBL-330,Harness cable set,200,60.0,0.07,j.okafor
+PO-4509,1,V300,USD,GOODS,STL-210,"Steel plate 0.25in, 4ft x 8ft",60,95.0,0.07,a.mensah
+PO-4510,1,V600,USD,GOODS,OFC-102,Ergonomic desk chair,20,200.0,0.07,m.lindqvist
+PO-4511,1,V100,USD,GOODS,BRG-016,Precision bearing kit,150,28.0,0.07,j.okafor
+PO-4512,1,V100,USD,GOODS,MTR-110,Stepper motor 1.8 degree,400,36.0,0.07,j.okafor
+PO-4513,1,V200,USD,GOODS,PKG-500,"Pallet wrap film, 18in",600,27.5,0.07,r.castillo
+PO-4514,1,V300,USD,GOODS,STL-330,"Structural I beam W8x18, 20ft",50,1000.0,0.07,a.mensah
+PO-4515,1,V300,USD,GOODS,STL-405,Steel sheet 16 gauge,400,22.5,0.07,a.mensah
+PO-4515,2,V300,USD,GOODS,STL-412,"Rebar #4, 20ft",1000,4.1,0.07,a.mensah
+PO-4516,1,V700,USD,GOODS,GIP-220,Hydraulic fitting kit,75,64.0,0.07,a.mensah
+PO-4517,1,V500,USD,SERVICE,SVC-FRT,"Freight consolidation, October lanes",1,7800.0,0.0,r.castillo
+PO-4518,1,V400,EUR,GOODS,ELC-880,Industrial power supply 24V,50,190.0,0.0,j.okafor
+PO-4519,1,V300,USD,GOODS,STL-118,Steel flat bar 3in,120,38.0,0.07,a.mensah
+PO-4520,1,V100,USD,GOODS,MTR-450,Gear motor 450W,70,240.0,0.07,j.okafor

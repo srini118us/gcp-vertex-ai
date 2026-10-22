@@ -1,0 +1,15 @@
+From: billing@apexcomponents.example
+To: ap@calder.example
+Date: 2026-10-16 09:12
+Subject: Invoice AC-10180 for PO-4501
+
+Hello Calder AP team,
+
+Attached is invoice AC-10180 for the full 500 servo motor assemblies on PO-4501.
+As agreed with Dana Whitfield (AP Manager) on our call on October 9, the full
+quantity is approved for billing now, even though the last 150 units ship next week.
+Please process the invoice in full so it lands in this payment run.
+
+Thank you,
+Lena Park
+Billing, Apex Components Inc.

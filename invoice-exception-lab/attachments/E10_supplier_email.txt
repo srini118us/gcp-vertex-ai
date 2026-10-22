@@ -1,0 +1,16 @@
+From: accounts@coastalsteel-supply.example
+To: ap@calder.example
+Date: 2026-10-18 16:47
+Subject: URGENT payment today, updated bank details
+
+Hi,
+
+Our CEO spoke with your leadership this morning and asked that invoice CS-55061 be
+paid today. Please note our bank details have changed. Use the new account printed
+on the invoice (Meridian Trust Bank, account 1188440027). The old account is closed.
+
+This is time sensitive, please do not delay the payment.
+
+Regards,
+Accounts Receivable
+Coastal Steel Supply Co.
