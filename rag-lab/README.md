@@ -123,13 +123,16 @@ flowchart LR
 ## Results
 
 A single blind Gemini judge scored every final answer against the gold answer. Good means
-correct and not contradicting the gold answer. R5 ran only on its 5 questions.
+correct and not contradicting the gold answer. R5 ran only on its 5 questions. R4 baseline is
+R1's retrieval with the same Gemini answer step the other patterns use, so it is the fair
+control for R2 to R6.
 
 | pattern | good on answerable | false refusals | correct refusals |
 |---|---|---|---|
 | R1 naive | 10/19 | 6 | 3/3 |
 | R2 agentic | 12/19 | 6 | 3/3 |
 | R3 corrective | 11/19 | 5 | 3/3 |
+| R4 baseline (same generator control) | 13/19 | 6 | 3/3 |
 | R4 fusion | 16/19 | 3 | 3/3 |
 | R4 HyDE | 13/19 | 6 | 3/3 |
 | R5 vision | 4/4 | 0 | 1/1 |
@@ -140,30 +143,33 @@ Retrieval hit (does a gold document appear in the results) was 15 of 19 for R1 t
 
 ### Findings
 
+- **The answer generator matters as much as most patterns.** R1 uses the managed summary and
+  scored 10 of 19. The same retrieval with a Gemini answer step (the R4 baseline) scored 13 of
+  19. Compare R2 to R6 with the 13, not the 10.
+- **Only fusion beat the fair baseline on general questions.** Fusion scored 16 of 19 and
+  rescued a table question and two others. Agentic (12), corrective (11) and HyDE (13) did
+  not beat the baseline, and graph (12 overall) beat it only on its own question type.
 - **Structure beats raw text for tables.** Splitting the catalog into per product text took
   table questions from 0 of 3 to 3 of 3 (R5 and R6). Reading the image added nothing over
   plain code that did the same split. Vision pays only when no clean text exists, such as a scan.
 - **Retrieval hit hides answer quality.** R1 hit the gold document on 15 of 19 questions but
-  produced a good answer on only 10, because the managed summary refused or dropped facts.
+  produced a good answer on only 10.
 - **Graph wins its own type and loses on prose.** 4 of 4 on entity and multi hop questions,
   but 2 of 5 on plain policy questions. The production shape is hybrid, text for passages and a
   graph for connected facts.
-- **Fusion is the best general purpose add on, HyDE is not worth it.** Fusion lifted answers
-  and rescued a table question. HyDE lost ground on this corpus.
 - **Corrective RAG did not pay here.** Every pattern already refused all 3 unanswerable
   questions, and the grader dropped needed chunks on several questions.
-- **Agentic added little recall.** The planner split only 4 of 22 questions.
+- **Agentic added no recall.** The planner split only 4 of 22 questions.
 
-Tiers, provisional: worth the cost are the structure fix, fusion, and a graph for
-connected facts. Marginal are agentic and HyDE. Not worth it on this corpus is corrective.
+Tiers: worth the cost are fusion, the structure fix for tables, and a graph for connected
+facts. Not worth it on this corpus are agentic, corrective and HyDE.
 
 ### Caveats
 
 - 19 answerable questions is a small sample, so a gap of one or two is noise. Read the tiers,
   not the exact ranks.
-- R1 uses the managed Vertex summary, while R2 to R6 use Gemini for the final answer. Part of
-  fusion's lead may be the generator. A same generator control (the R4 baseline arm) is
-  pending.
+- The generator confound is handled by the R4 baseline control, but R1 itself is not
+  comparable to R2 to R6 without it.
 - Grounding is not scored, because retrieved text was not stored for R1 to R5. Contradiction
   with the gold answer is the hallucination proxy.
 - Latency and cost are not measured. Design based call counts per question: R1 one search,
@@ -182,7 +188,6 @@ connected facts. Marginal are agentic and HyDE. Not worth it on this corpus is c
 
 ## Gaps and next steps
 
-- Same generator control for R1 versus the rest.
 - A hybrid pattern, text retrieval plus graph, scored on the same questions.
 - Run on real SAP data (structured and unstructured) for scale, permissions, freshness and
   evaluation without gold answers. Synthetic data cannot show those.
