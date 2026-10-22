@@ -1,0 +1,10 @@
+__pycache__/
+.venv/
+venv/
+results/
+*.log
+
+*_log.txt
+config/
+
+!spec/*.json

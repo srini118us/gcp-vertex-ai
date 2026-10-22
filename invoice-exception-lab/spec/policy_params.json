@@ -1,0 +1,24 @@
+{
+ "_source": "Parameters transcribed from the current policy pack. Change a policy, change this file, cite the clause.",
+ "price_tolerance_pct": "0.02",
+ "price_tolerance_cap_usd": "500.00",
+ "tax_slack": "1.00",
+ "duplicate_window_days": 30,
+ "fx_to_usd": {"USD": "1", "EUR": "1.08"},
+ "approval_matrix_usd": [["10000.00", "AP_CLERK"], ["50000.00", "AP_MANAGER"], ["250000.00", "CONTROLLER"]],
+ "approval_above_matrix": "CFO",
+ "clauses": {
+  "PRICE_VARIANCE": "AP-POL-01@v2:2.1",
+  "QTY_OVER_RECEIPT": "AP-POL-01@v2:3.1",
+  "MISSING_GR": "AP-POL-01@v2:4.1",
+  "SERVICE_SES": "AP-POL-01@v2:4.2",
+  "DUPLICATE": "AP-POL-02@v1:1.1",
+  "DUPLICATE_SUSPECTED": "AP-POL-02@v1:1.2",
+  "BANK_CHANGE": "AP-POL-03@v1:1.1",
+  "APPROVAL_MATRIX": "AP-POL-04@v1:1.1",
+  "FX": "AP-POL-04@v1:1.2",
+  "TAX_ERROR": "AP-POL-05@v1:1.1",
+  "CURRENCY_MISMATCH": "AP-POL-05@v1:2.1",
+  "VENDOR_BLOCKED": "AP-POL-07@v1:1.1"
+ }
+}

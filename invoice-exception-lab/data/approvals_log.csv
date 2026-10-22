@@ -1,0 +1,5 @@
+approval_id,object_id,approval_type,approver,role,approval_date,note
+APR-301,PO-4503,PO_RELEASE,d.whitfield,AP_MANAGER,2026-09-30,PO release
+APR-302,PO-4514,PO_RELEASE,s.navarro,CONTROLLER,2026-10-01,PO release
+APR-303,PO-4501,PO_RELEASE,s.navarro,CONTROLLER,2026-09-28,PO release
+APR-304,PO-4520,PO_RELEASE,d.whitfield,AP_MANAGER,2026-10-02,PO release

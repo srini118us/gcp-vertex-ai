@@ -1,0 +1,416 @@
+{
+ "R01": {
+  "subtotal": "1371.00",
+  "tax": "95.97",
+  "total": "1466.97",
+  "currency": "USD",
+  "invoice_number": "FW-3388",
+  "invoice_date": "2026-10-13",
+  "po_number": "PO-4502",
+  "supplier_name": "Fairway Office Supply",
+  "bank_account": "3307715264",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "OFC-011",
+    "quantity": "30",
+    "unit_price": "42.00",
+    "amount": "1260.00"
+   },
+   {
+    "line": 2,
+    "product_code": "OFC-045",
+    "quantity": "6",
+    "unit_price": "18.50",
+    "amount": "111.00"
+   }
+  ]
+ },
+ "R02": {
+  "subtotal": "60000.00",
+  "tax": "4200.00",
+  "total": "64200.00",
+  "currency": "USD",
+  "invoice_number": "AC-10154",
+  "invoice_date": "2026-10-13",
+  "po_number": "PO-4503",
+  "supplier_name": "Apex Components Inc.",
+  "bank_account": "7731004412",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "CTL-900",
+    "quantity": "300",
+    "unit_price": "200.00",
+    "amount": "60000.00"
+   }
+  ]
+ },
+ "R03": {
+  "subtotal": "10150.00",
+  "tax": "710.50",
+  "total": "10860.50",
+  "currency": "USD",
+  "invoice_number": "BF-77120",
+  "invoice_date": "2026-10-14",
+  "po_number": "PO-4504",
+  "supplier_name": "Bluefin Packaging LLC",
+  "bank_account": "5520183377",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "PKG-310",
+    "quantity": "200",
+    "unit_price": "50.75",
+    "amount": "10150.00"
+   }
+  ]
+ },
+ "R04": {
+  "subtotal": "8320.00",
+  "tax": "582.40",
+  "total": "8902.40",
+  "currency": "USD",
+  "invoice_number": "BF-77131",
+  "invoice_date": "2026-10-14",
+  "po_number": "PO-4505",
+  "supplier_name": "Bluefin Packaging LLC",
+  "bank_account": "5520183377",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "PKG-415",
+    "quantity": "100",
+    "unit_price": "83.20",
+    "amount": "8320.00"
+   }
+  ]
+ },
+ "R05": {
+  "subtotal": "4500.00",
+  "tax": "315.00",
+  "total": "4815.00",
+  "currency": "USD",
+  "invoice_number": "CS-55021",
+  "invoice_date": "2026-10-14",
+  "po_number": "PO-4506",
+  "supplier_name": "Coastal Steel Supply Co.",
+  "bank_account": "8840021955",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "STL-104",
+    "quantity": "100",
+    "unit_price": "45.00",
+    "amount": "4500.00"
+   }
+  ]
+ },
+ "R06": {
+  "subtotal": "8400.00",
+  "tax": "588.00",
+  "total": "8988.00",
+  "currency": "USD",
+  "invoice_number": "AC-10161",
+  "invoice_date": "2026-10-14",
+  "po_number": "PO-4507",
+  "supplier_name": "Apex Components Inc.",
+  "bank_account": "7731004412",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "SNS-075",
+    "quantity": "40",
+    "unit_price": "210.00",
+    "amount": "8400.00"
+   }
+  ]
+ },
+ "R07": {
+  "subtotal": "4200.00",
+  "tax": "294.00",
+  "total": "4494.00",
+  "currency": "USD",
+  "invoice_number": "AC 10077",
+  "invoice_date": "2026-10-15",
+  "po_number": "PO-4511",
+  "supplier_name": "Apex Components Inc.",
+  "bank_account": "7731004412",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "BRG-016",
+    "quantity": "150",
+    "unit_price": "28.00",
+    "amount": "4200.00"
+   }
+  ]
+ },
+ "R08": {
+  "subtotal": "5700.00",
+  "tax": "399.00",
+  "total": "6099.00",
+  "currency": "USD",
+  "invoice_number": "CS-55034",
+  "invoice_date": "2026-10-15",
+  "po_number": "PO-4509",
+  "supplier_name": "Coastal Steel Supply Co.",
+  "bank_account": "9902334118",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "STL-210",
+    "quantity": "60",
+    "unit_price": "95.00",
+    "amount": "5700.00"
+   }
+  ]
+ },
+ "R09": {
+  "subtotal": "4000.00",
+  "tax": "360.00",
+  "total": "4360.00",
+  "currency": "USD",
+  "invoice_number": "FW-3402",
+  "invoice_date": "2026-10-15",
+  "po_number": "PO-4510",
+  "supplier_name": "Fairway Office Supply",
+  "bank_account": "3307715264",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "OFC-102",
+    "quantity": "20",
+    "unit_price": "200.00",
+    "amount": "4000.00"
+   }
+  ]
+ },
+ "R10": {
+  "subtotal": "14400.00",
+  "tax": "1008.00",
+  "total": "15408.00",
+  "currency": "EUR",
+  "invoice_number": "AC-10170",
+  "invoice_date": "2026-10-15",
+  "po_number": "PO-4512",
+  "supplier_name": "Apex Components Inc.",
+  "bank_account": "7731004412",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "MTR-110",
+    "quantity": "400",
+    "unit_price": "36.00",
+    "amount": "14400.00"
+   }
+  ]
+ },
+ "E01": {
+  "subtotal": "62500.00",
+  "tax": "4375.00",
+  "total": "66875.00",
+  "currency": "USD",
+  "invoice_number": "AC-10180",
+  "invoice_date": "2026-10-16",
+  "po_number": "PO-4501",
+  "supplier_name": "Apex Components Inc.",
+  "bank_account": "7731004412",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "MTR-220",
+    "quantity": "500",
+    "unit_price": "125.00",
+    "amount": "62500.00"
+   }
+  ]
+ },
+ "E02": {
+  "subtotal": "16500.00",
+  "tax": "1155.00",
+  "total": "17655.00",
+  "currency": "USD",
+  "invoice_number": "INV2045A",
+  "invoice_date": "2026-10-16",
+  "po_number": "PO-4513",
+  "supplier_name": "Bluefin Packaging LLC",
+  "bank_account": "5520183377",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "PKG-500",
+    "quantity": "600",
+    "unit_price": "27.50",
+    "amount": "16500.00"
+   }
+  ]
+ },
+ "E03": {
+  "subtotal": "16800.00",
+  "tax": "1176.00",
+  "total": "17976.00",
+  "currency": "USD",
+  "invoice_number": "AC-10188",
+  "invoice_date": "2026-10-16",
+  "po_number": "PO-4520",
+  "supplier_name": "Apex Components Inc.",
+  "bank_account": "7731004412",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "MTR-450",
+    "quantity": "70",
+    "unit_price": "240.00",
+    "amount": "16800.00"
+   }
+  ]
+ },
+ "E04": {
+  "subtotal": "50750.00",
+  "tax": "3552.50",
+  "total": "54302.50",
+  "currency": "USD",
+  "invoice_number": "CS-55048",
+  "invoice_date": "2026-10-17",
+  "po_number": "PO-4514",
+  "supplier_name": "Coastal Steel Supply Co.",
+  "bank_account": "8840021955",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "STL-330",
+    "quantity": "50",
+    "unit_price": "1015.00",
+    "amount": "50750.00"
+   }
+  ]
+ },
+ "E05": {
+  "subtotal": "13100.00",
+  "tax": "917.00",
+  "total": "14017.00",
+  "currency": "USD",
+  "invoice_number": "CS-55052",
+  "invoice_date": "2026-10-17",
+  "po_number": "PO-4515",
+  "supplier_name": "Coastal Steel Supply Co.",
+  "bank_account": "8840021955",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "STL-405",
+    "quantity": "400",
+    "unit_price": "22.50",
+    "amount": "9000.00"
+   },
+   {
+    "line": 2,
+    "product_code": "STL-412",
+    "quantity": "1000",
+    "unit_price": "4.10",
+    "amount": "4100.00"
+   }
+  ]
+ },
+ "E06": {
+  "subtotal": "4800.00",
+  "tax": "336.00",
+  "total": "5136.00",
+  "currency": "USD",
+  "invoice_number": "GIP-8812",
+  "invoice_date": "2026-10-17",
+  "po_number": "PO-4516",
+  "supplier_name": "Granite Industrial Parts",
+  "bank_account": "4418820931",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "GIP-220",
+    "quantity": "75",
+    "unit_price": "64.00",
+    "amount": "4800.00"
+   }
+  ]
+ },
+ "E07": {
+  "subtotal": "7800.00",
+  "tax": "0.00",
+  "total": "7800.00",
+  "currency": "USD",
+  "invoice_number": "EVL-2026-1015",
+  "invoice_date": "2026-10-17",
+  "po_number": "PO-4517",
+  "supplier_name": "Evergreen Logistics Services",
+  "bank_account": "6619047720",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "SVC-FRT",
+    "quantity": "1",
+    "unit_price": "7800.00",
+    "amount": "7800.00"
+   }
+  ]
+ },
+ "E08": {
+  "subtotal": "4800.00",
+  "tax": "336.00",
+  "total": "5136.00",
+  "currency": "USD",
+  "invoice_number": "AC-10192",
+  "invoice_date": "2026-10-18",
+  "po_number": "PO-4508",
+  "supplier_name": "Apex Components Inc.",
+  "bank_account": "7731004412",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "CBL-330",
+    "quantity": "80",
+    "unit_price": "60.00",
+    "amount": "4800.00"
+   }
+  ]
+ },
+ "E09": {
+  "subtotal": "9500.00",
+  "tax": "0.00",
+  "total": "9500.00",
+  "currency": "EUR",
+  "invoice_number": "DE-2026-0418",
+  "invoice_date": "2026-10-18",
+  "po_number": "PO-4518",
+  "supplier_name": "Delta Electronics GmbH",
+  "bank_account": "DE00RHB0012345678",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "ELC-880",
+    "quantity": "50",
+    "unit_price": "190.00",
+    "amount": "9500.00"
+   }
+  ]
+ },
+ "E10": {
+  "subtotal": "4560.00",
+  "tax": "319.20",
+  "total": "4879.20",
+  "currency": "USD",
+  "invoice_number": "CS-55061",
+  "invoice_date": "2026-10-18",
+  "po_number": "PO-4519",
+  "supplier_name": "Coastal Steel Supply Co.",
+  "bank_account": "1188440027",
+  "lines": [
+   {
+    "line": 1,
+    "product_code": "STL-118",
+    "quantity": "120",
+    "unit_price": "38.00",
+    "amount": "4560.00"
+   }
+  ]
+ }
+}

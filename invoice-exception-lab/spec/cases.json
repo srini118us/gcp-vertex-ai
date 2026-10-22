@@ -1,0 +1,146 @@
+[
+ {
+  "case_id": "R01",
+  "set": "regression",
+  "invoice_pdf": "invoices/R01.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R02",
+  "set": "regression",
+  "invoice_pdf": "invoices/R02.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R03",
+  "set": "regression",
+  "invoice_pdf": "invoices/R03.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R04",
+  "set": "regression",
+  "invoice_pdf": "invoices/R04.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R05",
+  "set": "regression",
+  "invoice_pdf": "invoices/R05.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R06",
+  "set": "regression",
+  "invoice_pdf": "invoices/R06.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R07",
+  "set": "regression",
+  "invoice_pdf": "invoices/R07.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R08",
+  "set": "regression",
+  "invoice_pdf": "invoices/R08.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R09",
+  "set": "regression",
+  "invoice_pdf": "invoices/R09.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "R10",
+  "set": "regression",
+  "invoice_pdf": "invoices/R10.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E01",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E01.pdf",
+  "attachments": [
+   "attachments/E01_supplier_email.txt"
+  ],
+  "followup": "attachments/E01_followup_gr.txt"
+ },
+ {
+  "case_id": "E02",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E02.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E03",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E03.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E04",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E04.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E05",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E05.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E06",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E06.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E07",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E07.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E08",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E08.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E09",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E09.pdf",
+  "attachments": [],
+  "followup": null
+ },
+ {
+  "case_id": "E10",
+  "set": "end_to_end",
+  "invoice_pdf": "invoices/E10.pdf",
+  "attachments": [
+   "attachments/E10_supplier_email.txt"
+  ],
+  "followup": null
+ }
+]

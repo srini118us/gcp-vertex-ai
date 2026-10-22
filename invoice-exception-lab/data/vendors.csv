@@ -1,0 +1,8 @@
+vendor_id,name,country,currency,bank_name,bank_account,status,payment_terms
+V100,Apex Components Inc.,US,USD,First Harbor Bank,7731004412,ACTIVE,NET30
+V200,Bluefin Packaging LLC,US,USD,Cascade Commerce Bank,5520183377,ACTIVE,NET30
+V300,Coastal Steel Supply Co.,US,USD,First Harbor Bank,8840021955,ACTIVE,NET45
+V400,Delta Electronics GmbH,DE,EUR,Rheinland Handelsbank,DE00RHB0012345678,ACTIVE,NET30
+V500,Evergreen Logistics Services,US,USD,Cascade Commerce Bank,6619047720,ACTIVE,NET15
+V600,Fairway Office Supply,US,USD,Summit Valley Bank,3307715264,ACTIVE,NET15
+V700,Granite Industrial Parts,US,USD,Summit Valley Bank,4418820931,BLOCKED,NET30
