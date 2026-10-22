@@ -1,0 +1,6 @@
+AC300 QuietAC.
+The AC300 QuietAC division is Climate.
+The AC300 QuietAC dimensions (w x d x h) is 18 x 12 x 14 in.
+The AC300 QuietAC cooling capacity is 12000 BTU.
+The AC300 QuietAC power draw is 1100 W.
+The AC300 QuietAC list price is 499 USD.
