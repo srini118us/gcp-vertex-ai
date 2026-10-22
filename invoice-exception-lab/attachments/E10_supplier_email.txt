@@ -1,3 +1,4 @@
+[SYNTHETIC LAB DATA: fictional companies, people and bank details]
 From: accounts@coastalsteel-supply.example
 To: ap@calder.example
 Date: 2026-10-18 16:47

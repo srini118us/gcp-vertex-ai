@@ -1,3 +1,4 @@
+[SYNTHETIC LAB DATA: fictional companies, people and bank details]
 From: billing@apexcomponents.example
 To: ap@calder.example
 Date: 2026-10-16 09:12

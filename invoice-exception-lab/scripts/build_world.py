@@ -448,10 +448,13 @@ def build_policies():
             fh.write(text)
 
 
+SYNTHETIC_LABEL = "[SYNTHETIC LAB DATA: fictional companies, people and bank details]\n"
+
+
 def build_attachments():
     for name, text in EMAILS.items():
         with open(D("attachments", name), "w", encoding="utf-8") as fh:
-            fh.write(text)
+            fh.write(SYNTHETIC_LABEL + text)
 
 
 def build_pdf(case):
