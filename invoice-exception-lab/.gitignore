@@ -6,3 +6,5 @@ results/
 
 *_log.txt
 config/
+
+!spec/*.json
