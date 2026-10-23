@@ -1,0 +1,20 @@
+{
+  "source": "staged logistics-gemini build, a2a-sdk 0.3.26",
+  "responses": {
+    "bad_json": {
+      "http_status": 200,
+      "error_code": -32700,
+      "has_id": false
+    },
+    "unknown_method": {
+      "http_status": 200,
+      "error_code": -32601,
+      "has_id": true
+    },
+    "missing_parts": {
+      "http_status": 200,
+      "error_code": -32602,
+      "has_id": true
+    }
+  }
+}

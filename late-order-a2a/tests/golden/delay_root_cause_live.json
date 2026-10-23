@@ -1,0 +1,260 @@
+{
+  "legacy_commit": "72027e364",
+  "as_of_date": "2026-10-14",
+  "captured_at": "2026-10-16T05:00:51+00:00",
+  "missing_behaviors": [],
+  "cases": [
+    {
+      "label": "split_shipment_warehouse_and_transit",
+      "order_id": 109778,
+      "result": {
+        "order_id": 109778,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 159064,
+            "status": "Complete",
+            "distribution_center": "Savannah GA",
+            "warehouse_lag_h": 40,
+            "dc_avg_lag_h": 13.3,
+            "transit_h": 115,
+            "dc_avg_transit_h": 56.8,
+            "cause": "WAREHOUSE_DELAY"
+          },
+          {
+            "item_id": 159065,
+            "status": "Complete",
+            "distribution_center": "Los Angeles CA",
+            "warehouse_lag_h": -6,
+            "dc_avg_lag_h": 13.1,
+            "transit_h": 115,
+            "dc_avg_transit_h": 58.2,
+            "cause": "TRANSIT_DELAY"
+          }
+        ]
+      }
+    },
+    {
+      "label": "cx_on_time",
+      "order_id": 1902,
+      "result": {
+        "order_id": 1902,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 2726,
+            "status": "Complete",
+            "distribution_center": "New Orleans LA",
+            "warehouse_lag_h": 19,
+            "dc_avg_lag_h": 12.6,
+            "transit_h": 29,
+            "dc_avg_transit_h": 56.0,
+            "cause": "WAREHOUSE_DELAY"
+          }
+        ]
+      }
+    },
+    {
+      "label": "approval_case",
+      "order_id": 38629,
+      "result": {
+        "order_id": 38629,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 55964,
+            "status": "Processing",
+            "distribution_center": "Memphis TN",
+            "warehouse_lag_h": null,
+            "dc_avg_lag_h": 12.6,
+            "transit_h": null,
+            "dc_avg_transit_h": 54.4,
+            "cause": "NOT_YET_SHIPPED"
+          }
+        ]
+      }
+    },
+    {
+      "label": "missing_order",
+      "order_id": 999999999,
+      "result": {
+        "order_id": 999999999,
+        "cause": "ORDER_NOT_FOUND"
+      }
+    },
+    {
+      "label": "multiple_items+shipped_undelivered+negative_duration",
+      "order_id": 89767,
+      "result": {
+        "order_id": 89767,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 129982,
+            "status": "Shipped",
+            "distribution_center": "Charleston SC",
+            "warehouse_lag_h": -20,
+            "dc_avg_lag_h": 10.9,
+            "transit_h": null,
+            "dc_avg_transit_h": 58.5,
+            "cause": "WITHIN_NORMAL"
+          },
+          {
+            "item_id": 129981,
+            "status": "Shipped",
+            "distribution_center": "Savannah GA",
+            "warehouse_lag_h": 25,
+            "dc_avg_lag_h": 13.3,
+            "transit_h": null,
+            "dc_avg_transit_h": 56.8,
+            "cause": "WAREHOUSE_DELAY"
+          },
+          {
+            "item_id": 129983,
+            "status": "Shipped",
+            "distribution_center": "Mobile AL",
+            "warehouse_lag_h": -20,
+            "dc_avg_lag_h": 12.7,
+            "transit_h": null,
+            "dc_avg_transit_h": 58.3,
+            "cause": "WITHIN_NORMAL"
+          }
+        ]
+      }
+    },
+    {
+      "label": "only_warehouse_delay",
+      "order_id": 82518,
+      "result": {
+        "order_id": 82518,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 119499,
+            "status": "Returned",
+            "distribution_center": "Houston TX",
+            "warehouse_lag_h": 48,
+            "dc_avg_lag_h": 12.4,
+            "transit_h": 20,
+            "dc_avg_transit_h": 56.7,
+            "cause": "WAREHOUSE_DELAY"
+          }
+        ]
+      }
+    },
+    {
+      "label": "only_within_normal",
+      "order_id": 211,
+      "result": {
+        "order_id": 211,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 302,
+            "status": "Complete",
+            "distribution_center": "Chicago IL",
+            "warehouse_lag_h": -69,
+            "dc_avg_lag_h": 12.1,
+            "transit_h": 81,
+            "dc_avg_transit_h": 58.5,
+            "cause": "WITHIN_NORMAL"
+          },
+          {
+            "item_id": 301,
+            "status": "Complete",
+            "distribution_center": "Mobile AL",
+            "warehouse_lag_h": -93,
+            "dc_avg_lag_h": 12.7,
+            "transit_h": 81,
+            "dc_avg_transit_h": 58.3,
+            "cause": "WITHIN_NORMAL"
+          }
+        ]
+      }
+    },
+    {
+      "label": "only_not_yet_shipped",
+      "order_id": 11977,
+      "result": {
+        "order_id": 11977,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 17333,
+            "status": "Processing",
+            "distribution_center": "Philadelphia PA",
+            "warehouse_lag_h": null,
+            "dc_avg_lag_h": 11.2,
+            "transit_h": null,
+            "dc_avg_transit_h": 58.1,
+            "cause": "NOT_YET_SHIPPED"
+          }
+        ]
+      }
+    },
+    {
+      "label": "only_transit_delay",
+      "order_id": 104839,
+      "result": {
+        "order_id": 104839,
+        "baseline_window": [
+          "2026-07-16",
+          "2026-10-14"
+        ],
+        "items": [
+          {
+            "item_id": 151897,
+            "status": "Complete",
+            "distribution_center": "New Orleans LA",
+            "warehouse_lag_h": -14,
+            "dc_avg_lag_h": 12.6,
+            "transit_h": 105,
+            "dc_avg_transit_h": 56.0,
+            "cause": "TRANSIT_DELAY"
+          },
+          {
+            "item_id": 151898,
+            "status": "Complete",
+            "distribution_center": "Chicago IL",
+            "warehouse_lag_h": -86,
+            "dc_avg_lag_h": 12.1,
+            "transit_h": 105,
+            "dc_avg_transit_h": 58.5,
+            "cause": "TRANSIT_DELAY"
+          },
+          {
+            "item_id": 151896,
+            "status": "Complete",
+            "distribution_center": "New Orleans LA",
+            "warehouse_lag_h": 7,
+            "dc_avg_lag_h": 12.6,
+            "transit_h": 105,
+            "dc_avg_transit_h": 56.0,
+            "cause": "TRANSIT_DELAY"
+          }
+        ]
+      }
+    }
+  ]
+}

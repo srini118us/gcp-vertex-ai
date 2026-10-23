@@ -1,0 +1,102 @@
+# Continuous integration for the lab repository.
+# Runs on every pull request to main and every push to main. No cloud credentials are used:
+# every job is offline, so a fork or a leaked workflow log exposes nothing.
+#
+# Required checks (set in branch protection): secret-scan, invoice-lab-tests, late-order-tests.
+# dependency-audit is informational: new advisories are published daily, and a red build caused
+# by someone else's release should not block an unrelated pull request. Dependabot handles them.
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 11 * * 1"   # Monday 11:17 UTC: catch new advisories even when nothing changes
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history: a secret deleted later is still a leak
+      - name: Install gitleaks 8.21.2
+        run: |
+          curl -sSL -o gl.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz
+          tar xzf gl.tgz gitleaks
+      - name: Scan history and working tree
+        run: |
+          ./gitleaks git --config .gitleaks.toml --redact --no-banner --exit-code 1 .
+          ./gitleaks dir --config .gitleaks.toml --redact --no-banner --exit-code 1 .
+
+  invoice-lab-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: invoice-exception-lab
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: invoice-exception-lab/requirements.txt
+      - run: pip install -r requirements.txt
+      - name: Validate the synthetic world against the independent oracle
+        run: python scripts/validate_world.py
+      - name: Offline tests (extraction, verification, matcher, agent guardrails, production layer)
+        run: |
+          set -e
+          for t in tests/test_*.py; do
+            echo "::group::$t"
+            python "$t"
+            echo "::endgroup::"
+          done
+
+  late-order-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: late-order-a2a
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            late-order-a2a/requirements.txt
+            late-order-a2a/requirements-dev.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - name: Offline tests (cloud tests skip unless RUN_CLOUD_TESTS=1)
+        run: python -m pytest -q -p no:warnings
+
+  dependency-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pip-audit
+      - name: Audit pinned manifests (accepted risks are listed in SECURITY.md)
+        run: |
+          pip-audit --no-deps --disable-pip -r late-order-a2a/requirements.txt --ignore-vuln GHSA-xcq7-p3pf-p88h
+          grep -v pywin32 bq-data-agent/requirements.txt > /tmp/bq.txt
+          pip-audit --no-deps --disable-pip -r /tmp/bq.txt --ignore-vuln GHSA-xcq7-p3pf-p88h
+          pip-audit -r invoice-exception-lab/requirements.txt --ignore-vuln GHSA-xcq7-p3pf-p88h

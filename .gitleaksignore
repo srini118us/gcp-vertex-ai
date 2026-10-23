@@ -1,0 +1,7 @@
+# Findings in old commits. Each secret was revoked or rotated (see SECURITY.md); listed so a
+# full history scan stays green. Never add a finding here before the secret is revoked.
+0b6977869f84e593bce36cb259ab91e540da189b:.env:google-cloud-api-key-aq:5
+0b6977869f84e593bce36cb259ab91e540da189b:adk/.env:google-cloud-api-key-aq:1
+0b6977869f84e593bce36cb259ab91e540da189b:agent-engine/stock_agent/.env:google-cloud-api-key-aq:16
+0b6977869f84e593bce36cb259ab91e540da189b:mcp-incident-manager/config/settings.py:hardcoded-password-assignment:18
+0b6977869f84e593bce36cb259ab91e540da189b:sap-assistant/sap_landscape_agent/.env:google-cloud-api-key-aq:9

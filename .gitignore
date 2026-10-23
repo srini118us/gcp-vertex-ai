@@ -97,6 +97,7 @@ __pycache__/
 bq-data-agent.data_agent/
 
 !*.evalset.json
+!late-order-a2a/tests/golden/*.json
 
 bq-data-agent/docs/screenshots/
 

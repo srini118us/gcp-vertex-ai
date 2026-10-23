@@ -1,0 +1,25 @@
+# Secret scanning rules for this repository. Default gitleaks rules plus two that the defaults
+# missed in this repo's own history (see SECURITY.md).
+title = "gcp-vertex-ai gitleaks config"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "hardcoded-password-assignment"
+description = "Password assigned as a literal in code or config"
+regex = '''(?i)\b(?:password|passwd|pwd|secret)\b\s*(?::\s*\w+\s*)?[:=]\s*["']([^"'\s$<{][^"'\s]{5,})["']'''
+secretGroup = 1
+keywords = ["password", "passwd", "pwd", "secret"]
+  [rules.allowlist]
+  regexes = ['''(?i)(example|placeholder|changeme|your[_-]|xxx|dummy|sap_pass)''']
+
+[[rules]]
+id = "google-cloud-api-key-aq"
+description = "Google Cloud API key in the AQ. format"
+regex = '''\bAQ\.[A-Za-z0-9_\-]{30,}'''
+keywords = ["aq."]
+
+[allowlist]
+description = "Third party code and generated files are not ours to scan"
+paths = ['''(^|/)venv/''', '''(^|/)\.venv/''', '''site-packages/''', '''\.ipynb$''']

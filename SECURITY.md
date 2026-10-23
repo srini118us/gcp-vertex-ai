@@ -9,6 +9,7 @@ reads them from Secret Manager.
 | Date | Finding | Action |
 |---|---|---|
 | 2026-10-22 | A ServiceNow developer instance admin password was committed in `mcp-incident-manager/config/settings.py` | Password rotated the same day. Settings moved to environment variables with `.env.example`; live mode now fails closed without them and defaults to mock. The old value remains in git history but is no longer valid. History was not rewritten: rotation is the control, and a force push would break every clone for no added protection. |
+| 2026-10-22 | The CI secret scan found two Google Cloud API keys (AQ. format) in four `.env` files committed on 2026-04-11 and untracked later, still readable in history | Keys revoked in the owning project. Gitleaks now runs on every pull request over the full history, with a custom rule for this key format and one for literal passwords (the default rules missed the ServiceNow password). Old findings are listed in `.gitleaksignore` only after revocation. |
 | 2026-10-22 | A Python virtual environment (`mcp-incident-manager/venv`, 30 MB, 1,692 files) and `__pycache__` files were tracked despite the ignore rules | Removed from the index; the root `.gitignore` already excludes them. |
 
 ## Dependency advisories (Dependabot), reviewed 2026-10-22

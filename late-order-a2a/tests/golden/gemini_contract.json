@@ -1,0 +1,63 @@
+{
+  "source_commit": "72027e364",
+  "tool_declaration": {
+    "description": "Governed logistics diagnosis for one order: per item warehouse lag and transit time,\ncompared with the shipping distribution center's 90 day baseline. Rules decide the cause.",
+    "name": "delay_root_cause",
+    "parameters_json_schema": {
+      "properties": {
+        "order_id": {
+          "title": "Order Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "order_id"
+      ],
+      "title": "delay_root_causeParams",
+      "type": "object"
+    },
+    "response_json_schema": {
+      "additionalProperties": true,
+      "type": "object"
+    }
+  },
+  "instruction": "You diagnose delivery delays for one order at a time. Always call delay_root_cause.\nReport each item's cause exactly as returned, with the hours compared to the baseline.\nAlways include each item's cause code exactly, e.g. WAREHOUSE_DELAY.\nNever speculate beyond the tool output. You do not handle refunds or customer communication.",
+  "model": "gemini-2.5-flash",
+  "description": "Supply Chain team agent. Diagnoses why a specific order is delayed: warehouse lag versus transit time, against the distribution center baseline.",
+  "agent_card": {
+    "capabilities": {},
+    "defaultInputModes": [
+      "text/plain"
+    ],
+    "defaultOutputModes": [
+      "text/plain"
+    ],
+    "description": "Supply Chain team agent. Diagnoses why a specific order is delayed: warehouse lag versus transit time, against the distribution center baseline.",
+    "name": "logistics_agent",
+    "preferredTransport": "JSONRPC",
+    "protocolVersion": "0.3.0",
+    "skills": [
+      {
+        "description": "Supply Chain team agent. Diagnoses why a specific order is delayed: warehouse lag versus transit time, against the distribution center baseline. I diagnose delivery delays for one order at a time. Always call delay_root_cause.\nReport each item's cause exactly as returned, with the hours compared to the baseline.\nAlways include each item's cause code exactly, e.g. WAREHOUSE_DELAY.\nNever speculate beyond the tool output. I do not handle refunds or customer communication.",
+        "examples": [],
+        "id": "logistics_agent",
+        "name": "model",
+        "tags": [
+          "llm"
+        ]
+      },
+      {
+        "description": "Governed logistics diagnosis for one order: per item warehouse lag and transit time,\ncompared with the shipping distribution center's 90 day baseline. Rules decide the cause.",
+        "id": "logistics_agent-delay_root_cause",
+        "name": "delay_root_cause",
+        "tags": [
+          "llm",
+          "tools"
+        ]
+      }
+    ],
+    "supportsAuthenticatedExtendedCard": false,
+    "url": "http://localhost:8001",
+    "version": "0.0.1"
+  }
+}
