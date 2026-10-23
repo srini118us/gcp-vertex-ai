@@ -1,0 +1,21 @@
+# Weekly grouped dependency updates: one pull request per lab instead of one per package.
+version: 2
+updates:
+  - package-ecosystem: pip
+    directories: ["/", "/invoice-exception-lab", "/late-order-a2a", "/bq-data-agent"]
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 4
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+      routine:
+        applies-to: version-updates
+        update-types: [minor, patch]
+        patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
