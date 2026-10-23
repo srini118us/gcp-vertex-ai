@@ -73,6 +73,8 @@ jobs:
         working-directory: late-order-a2a
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # legacy equivalence tests read the Phase 1 agent from git history
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
