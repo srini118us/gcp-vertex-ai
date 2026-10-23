@@ -3,18 +3,18 @@
 # Floors are set at or above the first patched release of every known advisory (Oct 2026).
 
 # Core
-google-genai>=1.0.0
+google-genai>=2.31.0
 python-dotenv>=1.2.2
 
 # GCP
 google-cloud-aiplatform>=1.133.0
-google-cloud-storage>=2.10.0
+google-cloud-storage>=3.17.1
 google-auth>=2.22.0
 google-cloud-resource-manager>=1.10.4
 
 # Data processing
 pandas>=2.1.3
-numpy>=1.25.2
+numpy>=2.5.4
 scikit-learn>=1.5.0
 
 # Web
