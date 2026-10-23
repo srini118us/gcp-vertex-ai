@@ -1,30 +1,26 @@
-# GCP Vertex AI Dependencies
-google-cloud-aiplatform==1.38.0
-google-cloud-storage==2.10.0
-google-auth==2.22.0
-google-cloud-resource-manager==1.10.4
-
-# Data Processing
-pandas==2.1.3
-numpy==1.25.2
-scikit-learn==1.3.2
-
-# Web Framework (if needed)
-flask==2.3.3
-requests==2.31.0
-
-# Environment Management
-python-dotenv==1.0.0
-
-# Development Tools
-jupyter==1.0.0
-ipykernel==6.26.0
-# GCP Vertex AI Labs - Dependencies
+# GCP Vertex AI Labs: shared dependencies for the early labs and notebooks.
+# Each lab folder with its own requirements.txt uses that file instead.
+# Floors are set at or above the first patched release of every known advisory (Oct 2026).
 
 # Core
 google-genai>=1.0.0
-python-dotenv>=1.0.0
+python-dotenv>=1.2.2
 
-# For later labs
-# google-cloud-aiplatform>=1.60.0
-# vertexai>=1.60.0
+# GCP
+google-cloud-aiplatform>=1.133.0
+google-cloud-storage>=2.10.0
+google-auth>=2.22.0
+google-cloud-resource-manager>=1.10.4
+
+# Data processing
+pandas>=2.1.3
+numpy>=1.25.2
+scikit-learn>=1.5.0
+
+# Web
+flask>=3.1.3
+requests>=2.33.0
+
+# Notebooks
+jupyter
+ipykernel
