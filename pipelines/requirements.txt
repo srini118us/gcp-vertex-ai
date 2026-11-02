@@ -1,4 +1,4 @@
 # Lab 05: Vertex AI Pipelines
 
 kfp>=2.0.0
-google-cloud-aiplatform>=1.40.0
+google-cloud-aiplatform>=2.7.0
