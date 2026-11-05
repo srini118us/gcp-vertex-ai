@@ -1,0 +1,38 @@
+# Cloud Build pipeline for the AP consumer: gate, build, push, deploy.
+# Runs as ap-deployer (set on the trigger). Triggered on merges to main that touch the pipeline.
+# Any failing step stops the build, so a failing gate means no image and no deploy.
+substitutions:
+  _REGION: us-central1
+  _IMAGE: us-central1-docker.pkg.dev/${PROJECT_ID}/cloud-run-source-deploy/ap-consumer
+
+steps:
+  - id: gate
+    name: python:3.12-slim
+    dir: invoice-exception-lab
+    entrypoint: bash
+    args:
+      - -c
+      - pip install -q -r pipeline/consumer/requirements.txt && python tests/test_pipeline_offline.py
+
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args: ["build", "-t", "${_IMAGE}:${SHORT_SHA}", "invoice-exception-lab/pipeline/consumer"]
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args: ["push", "${_IMAGE}:${SHORT_SHA}"]
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ap-consumer
+      - --image=${_IMAGE}:${SHORT_SHA}
+      - --region=${_REGION}
+      - --update-labels=commit-sha=${SHORT_SHA}
+      - --quiet
+
+options:
+  logging: CLOUD_LOGGING_ONLY
