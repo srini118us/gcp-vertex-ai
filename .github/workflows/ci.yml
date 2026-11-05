@@ -52,9 +52,9 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-        cache-dependency-path: |
-          invoice-exception-lab/requirements.txt
-          invoice-exception-lab/pipeline/consumer/requirements.txt
+          cache-dependency-path: |
+            invoice-exception-lab/requirements.txt
+            invoice-exception-lab/pipeline/consumer/requirements.txt
       - run: pip install -r requirements.txt -r pipeline/consumer/requirements.txt
       - name: Validate the synthetic world against the independent oracle
         run: python scripts/validate_world.py
