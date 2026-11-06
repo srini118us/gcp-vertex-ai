@@ -6,4 +6,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py .
 # Cloud Run provides PORT. One worker, four threads: at most 4 requests in parallel per instance.
+RUN useradd --create-home --uid 10001 appuser
+USER appuser
 CMD exec gunicorn --bind :$PORT --workers 1 --threads 4 main:app
