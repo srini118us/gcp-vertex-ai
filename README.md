@@ -17,6 +17,7 @@ Hands-on labs exploring Google Cloud Vertex AI for enterprise and SAP-oriented A
 | `a2a-finops/` | Agent-to-Agent FinOps — multi-agent orchestration across SAP and GCP for cross-platform cost analysis | A2A protocol, multi-agent |
 | `mcp-incident-manager/` | MCP server for incident management, integrating with ServiceNow, Slack, and PagerDuty | MCP, FastAPI, Kubernetes |
 | `agentic-hub/` | Gemini Enterprise Agent Platform labs with SAP integration scenarios (S/4HANA, BTP, Joule, BDC) | Agent Platform, ADK, Gemini |
+| `invoice-exception-lab/` | AP invoice exceptions end to end: Document AI extraction, rules decide, ADK agent explains under guardrails, Pub/Sub to Cloud Run to Cloud SQL ledger posting exactly once, scored CI/CD gate | Document AI, ADK, Agent Engine, Pub/Sub, Cloud Run, Cloud SQL, Cloud Build |
 
 ---
 
