@@ -111,3 +111,5 @@ late-order-a2a/docs/
 # Claude Code: track only project skills
 .claude/*
 !.claude/skills/
+
+invoice-exception-lab/agent_engine/build/
