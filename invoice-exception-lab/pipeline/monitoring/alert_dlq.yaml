@@ -1,0 +1,19 @@
+displayName: "AP: dead letter queue has messages"
+combiner: OR
+conditions:
+  - displayName: "DLQ backlog above 0"
+    conditionThreshold:
+      filter: 'resource.type = "pubsub_subscription" AND resource.labels.subscription_id = "invoice-events-dlq-inspect" AND metric.type = "pubsub.googleapis.com/subscription/num_undelivered_messages"'
+      comparison: COMPARISON_GT
+      thresholdValue: 0
+      duration: 60s
+      aggregations:
+        - alignmentPeriod: 60s
+          perSeriesAligner: ALIGN_MAX
+alertStrategy:
+  autoClose: 1800s
+notificationChannels:
+  - projects/geap-ai-usecases-494501/notificationChannels/2914020540916398591
+documentation:
+  mimeType: text/markdown
+  content: "An invoice event failed 5 times and was dead lettered. Inspect: gcloud pubsub subscriptions pull invoice-events-dlq-inspect --limit=5 (no ack). Decide replay or discard, and record the decision."
