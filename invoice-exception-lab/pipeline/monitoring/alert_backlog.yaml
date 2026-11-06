@@ -1,0 +1,19 @@
+displayName: "AP: invoice events not being processed"
+combiner: OR
+conditions:
+  - displayName: "oldest unacked message older than 5 minutes"
+    conditionThreshold:
+      filter: 'resource.type = "pubsub_subscription" AND resource.labels.subscription_id = "invoice-events-push" AND metric.type = "pubsub.googleapis.com/subscription/oldest_unacked_message_age"'
+      comparison: COMPARISON_GT
+      thresholdValue: 300
+      duration: 60s
+      aggregations:
+        - alignmentPeriod: 60s
+          perSeriesAligner: ALIGN_MAX
+alertStrategy:
+  autoClose: 1800s
+notificationChannels:
+  - projects/geap-ai-usecases-494501/notificationChannels/2914020540916398591
+documentation:
+  mimeType: text/markdown
+  content: "Events are waiting more than 5 minutes. Check that ap-consumer is serving and the Cloud SQL instance is running."
