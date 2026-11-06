@@ -63,7 +63,7 @@ flowchart LR
 | Ledger store | Firestore; BigQuery; Cloud SQL Postgres | Cloud SQL Postgres ([ADR-002](adr/ADR-002-transactional-store.md)) | Small idle cost; real transactions and UNIQUE constraints |
 | Duplicate protection | Message id only; business key | Both: message id for redelivery, vendor plus normalized invoice number for resends ([ADR-003](adr/ADR-003-idempotency-key.md)) | Two keys to maintain |
 | Write pattern | Check then insert; INSERT ... ON CONFLICT | ON CONFLICT DO NOTHING RETURNING | Race safe under concurrency |
-| Ledger integrity | Application checks; database grants | Append only by grants (no UPDATE or DELETE on the ledger) | Corrections are new reversing entries |
+| Ledger integrity | Application checks; database grants | Table grants: SELECT and INSERT only on the ledger (append only); on processed_events only the outcome column may be updated | Corrections are new reversing entries |
 | Deploy identity | Default Cloud Build account; dedicated account | ap-deployer with four narrowly bound roles | More setup |
 | Image build | Buildpacks; Dockerfile | Dockerfile, Python 3.12 pinned, non root user | Explicit choices to maintain |
 | Agent hosting data | BigQuery and Vertex AI Search; packaged CSV and policies | Packaged into a self contained bundle | Data frozen per deployment |
@@ -112,7 +112,10 @@ Offline tests run in CI on every pull request. Cloud steps need a project and cr
   `google.auth.default()` before they can run on Agent Engine.
 * Alert policies are applied by hand from the YAML files, not by a pipeline.
 * The Cloud Build trigger watches all of `pipeline/`, so monitoring changes redeploy the consumer.
-* The guard and base images are not pinned by digest.
+* Build and base images (`python:3.12-slim`, `bash`) are referenced by tag, not digest. The deployed
+  consumer image itself is pinned by digest on every revision.
+* The lab ran the agent on all 20 cases for scoring; in production only exceptions would reach the
+  agent, and clean approvals would go straight to the publisher.
 * The decision publisher runs from a laptop; production would publish from the approval workflow.
 * `agent_engine/query.py` and `guard_remote.py` hard code the engine resource name; update `NAME` after each deploy.
 * The Agent Engine bundle pins `google-adk==2.4.0`, while `requirements.txt` lists 2.12.0.
